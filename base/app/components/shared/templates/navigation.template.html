@@ -1,0 +1,7 @@
+<nav>
+    <ul class="list-unstyled list-inline">
+        <li *ngIf="this._loginService.userIsLoggedIn">
+            <a href="#" (click)="Logout()">Logout</a>
+        </li>
+    </ul>
+</nav>

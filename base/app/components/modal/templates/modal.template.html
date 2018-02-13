@@ -1,0 +1,69 @@
+<div *ngIf="errorMsg" class="error-message">
+    <h4>An error occurred:</h4>
+    <p>{{ errorMsg }}</p>
+</div>
+
+<div *ngIf="!errorMsg">
+
+    <bs-modal id="backdrop" #modal [keyboard]="false" [backdrop]="'static'">
+        <div *ngIf="!modalInfoData" class="module-loading">
+            <span></span>
+        </div>
+        <div *ngIf="modalInfoData" class="modal-container">
+            <bs-modal-header>
+                <span class="btn btn-close" (click)="DismissModal(false, $event)">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                </span>
+
+                <h4 class="modal-title" [innerHTML]="modalTitle"></h4>
+
+            </bs-modal-header>
+
+            <div id="scrollcontent" class="scrollcontent">
+                <bs-modal-body *ngIf="modalBody">
+
+                    <div style="max-height: 400px;" class="row scrollpanel">
+
+                        <div class="col-sm-12 scrollpanel__container">
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div [innerHTML]="modalBody">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row" [ngSwitch]="modalFormType">
+
+                                <div *ngSwitchCase="ModalFormType.Default" class="col-xs-12">
+
+                                    <p>This is a default modal type</p>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </bs-modal-body>
+            </div>
+
+            <div>
+                <bs-modal-footer>
+
+                    <input id="modalResponse" name="modalResponse" type="hidden" value="" />
+
+                    <div>
+                        <button type="button" class="btn btn-default btn-brand btn-l" data-dismiss="modal" (click)="CloseModal(false, $event)">
+                            {{ (modalCancelText) ? modalCancelText : 'Cancel' }}
+                        </button>
+                        <button type="button" class="btn btn-brand" data-dismiss="modal" (click)="CloseModal(true, $event)">
+                            {{ (modalConfirmText) ? modalConfirmText : 'OK' }}
+                        </button>
+                    </div>
+                </bs-modal-footer>
+            </div>
+        </div>
+    </bs-modal>
+
+</div>

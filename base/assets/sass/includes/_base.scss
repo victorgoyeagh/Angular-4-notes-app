@@ -1,0 +1,149 @@
+//defaults
+
+body,
+html {}
+
+body {
+  background: transparent;
+  font-family: $font-open-sans--regular;
+  -webkit-font-smoothing: antialiased;
+  background: $color-brand--grey;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  clear: both;
+  font-weight: normal;
+  font-family: $font-open-sans--regular;
+}
+
+h1 {
+  font-family: $font-open-sans--regular;
+}
+
+input,
+label,
+p {
+  display: block;
+  font-weight: normal;
+}
+
+form {
+  width: 100%;
+  float: left;
+  clear: both;
+
+  .form-control {
+    width: 100%;
+    border-radius: 0;
+  }
+
+  .form-group {
+    .valid {
+      border-color: $color--green;
+    }
+
+    .invalid {
+      border-color: $color--red;
+    }
+  }
+}
+
+a {
+  text-decoration: none;
+
+  &:hover {}
+}
+
+a:focus,
+a:hover {
+  text-decoration: none;
+}
+
+ol,
+ul {
+  li {
+    font-family: $font-open-sans--regular;
+  }
+}
+
+sup {
+  &.asterix {
+    color: $color--red;
+  }
+}
+
+table {
+  width: 100%;
+
+  tfoot,
+  thead {}
+
+  td,
+  th {}
+
+  tbody {
+    tr {
+      cursor: pointer;
+
+      &:nth-child(even),
+      &:nth-child(odd) {
+        &:hover {
+          color: $color--white;
+          background-color: $color-brand--light-green;
+        }
+      }
+
+    }
+  }
+
+  & + & {
+    margin-bottom: 10px;
+  }
+
+}
+
+.table-responsive {
+  padding: 10px;
+  background-color: white;
+  margin-bottom: 20px;
+  border: 3px solid $color--grey;
+  border-bottom: 3px solid $color--darker-grey;
+}
+
+img {
+  @include responsive-image;
+}
+
+hr {
+  width: 100%;
+  display: inline-block;
+  clear: both;
+}
+
+textarea {
+  width: 100%;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+nav,
+section,
+summary {
+  display: block;
+  clear: both;
+  float: left;
+  width: 100%;
+}

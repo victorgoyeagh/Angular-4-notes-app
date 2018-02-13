@@ -1,0 +1,12 @@
+
+@mixin responsive-image {
+    width: 100% !important;
+    display: block;
+}
+
+@mixin radius($value) {
+    border-radius: $value;
+    -o-border-radius: $value;
+    -moz-border-radius: $value;
+    -webkit-border-radius: $value;
+}

@@ -1,0 +1,41 @@
+.btn {
+  &-brand {
+    border-width: 0;
+    background-color: $color-brand--light-green;
+    border-bottom: 3px solid $color-brand--green;
+    @include radius(0px);
+    color: $color--white;
+    font-weight: bold;
+
+    &:after {
+      content: '\232A';
+      position: relative;
+      margin: 0 -5px 0 10px;
+    }
+  }
+}
+
+.error-list {
+  &__item {
+    width: 100%;
+    display: inline-block;
+    color: $color--red;
+  }
+}
+
+.comments {
+  &__item {
+    background-color: $color--grey;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+  }
+}
+
+.modal-dialog {
+
+  .btn-close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+  }
+}
