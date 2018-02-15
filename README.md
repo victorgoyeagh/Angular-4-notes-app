@@ -1,4 +1,4 @@
-# noteapp
+# notes app
 Angular 4 / Typescript / RxJs / Redux / SASS / HTML5 / Grunt
 
 via bash or terminal...
