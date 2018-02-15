@@ -14,7 +14,6 @@ export class DataService {
     }
 
     FindUser(username: string, password: string) {
-
         let userDetails = <Array<IUser>>this.GetAllUsersData(),
             user = userDetails["Users"].filter((user) => {
             return ((user.Credentials.Email == username) && (user.Credentials.Password == password))
