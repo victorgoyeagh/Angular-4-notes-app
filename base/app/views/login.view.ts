@@ -50,15 +50,15 @@ export class LoginComponent {
     
     LaunchModal() {
         let modalInfo: ModalInfo = new ModalInfo(
-            `<h3>Map preview</h3>`,
+            `<h3>Modal</h3>`,
             ``,
             ModalCommand.Open,
             ModalType.Alert,
-            "Close",
+            "OK",
             "",
             null,
             ModalFormType.Default,
-            "mapPreviewModal",
+            "defaultModal",
             {
                 Width: 400,
                 Height: 400
@@ -67,6 +67,7 @@ export class LoginComponent {
         );
 
         this._communicationService.ShareModalInfoData(modalInfo);
+        return false;
     }
 
 }

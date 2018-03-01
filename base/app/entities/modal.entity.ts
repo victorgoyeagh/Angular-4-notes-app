@@ -1,5 +1,5 @@
 import { register } from 'ts-node/dist';
-import { MiscUtil } from './../helpers/MiscUtils';
+import { NumberUtil } from './../helpers/NumberUtil';
 
 export class ModalInfo {
     ModalTitle: string;
@@ -39,7 +39,7 @@ export class ModalInfo {
         this.ModalValue = ((_modalValue) ? _modalValue : undefined);
         this.ModalKey = ((_modalKey) ? _modalKey : 'modal');
         this.ModalFormType = _modalFormType;
-        this.Random = MiscUtil.GetRandomNumber();
+        this.Random = NumberUtil.GetRandomNumber();
         this.ModalDimensions = (_dimensions) ? _dimensions : undefined;
         this.ModalLocation = (_modalLocation) ? _modalLocation : undefined;
         this.ModalShowCloseButton = (_modalShowCloseButton) ? _modalShowCloseButton : undefined;

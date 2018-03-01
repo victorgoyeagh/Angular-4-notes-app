@@ -3,33 +3,37 @@ import { Routes, RouterModule, RouterLinkActive } from '@angular/router';
 import { HomeComponent } from '../views/home.view';
 import { LoginComponent } from '../views/login.view';
 import { CommentComponent } from '../views/comments.view';
+import { PageNotFoundComponent } from './../views/pagenotfound.view';
 
 const appRoutes: Routes = [
     {
-        path: '', 
+        path: '',
         component: HomeComponent,
         pathMatch: 'full'
     },
     {
-        path: 'login', 
+        path: 'login',
         component: LoginComponent,
         pathMatch: 'full'
     },
     {
-        path: 'home', 
+        path: 'home',
         component: HomeComponent,
         pathMatch: 'full'
     },
     {
-        path: 'comments', 
+        path: 'comments',
         component: CommentComponent,
         pathMatch: 'full'
+    },
+    {
+        path: '**',
+        component: PageNotFoundComponent
     }
-    //{ path: '**', component: PageNotFoundComponent }
 ];
 
-export const Routing: ModuleWithProviders = RouterModule.forRoot(appRoutes, 
-    { 
+export const Routing: ModuleWithProviders = RouterModule.forRoot(appRoutes,
+    {
         useHash: true
     }
 );

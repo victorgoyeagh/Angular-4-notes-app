@@ -4,17 +4,23 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { CommonModule } from "@angular/common";
+import { RouterModule } from '@angular/router';
 
 /* third_party */
 import { NgRedux, NgReduxModule } from 'ng2-redux';
 import { RootReducer, appInitialState } from './state/state.store';
-import { BsModalModule } from 'ng2-bs3-modal/ng2-bs3-modal';
-
-/* third_party_material */
+import { BsModalModule } from 'ng2-bs3-modal/ng2-bs3-modal'; 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+/* pipes */
+import { FormatAsUKDatePipe, FormatAs24HourTimePipe } from './pipes/fomatdate.pipe';
+import { SortByPipe } from './pipes/sort.pipe';
+import { FilterPipe } from './pipes/filter.pipe';
+
 
 /* components */
 import { Routing } from './routers/routing.route';
+import { PageNotFoundComponent } from './views/pagenotfound.view';
 import { LoginComponent } from './views/login.view';
 import { HomeComponent } from './views/home.view';
 import { MainComponent } from './views/main.view';
@@ -32,6 +38,9 @@ import { DataService } from './services/data.service';
 
 @NgModule({
     declarations: [
+        PageNotFoundComponent,
+        FormatAsUKDatePipe,
+        FormatAs24HourTimePipe,
         BaseComponent,
         HomeComponent,
         HeaderComponent,

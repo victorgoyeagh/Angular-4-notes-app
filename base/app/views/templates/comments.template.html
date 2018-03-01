@@ -65,7 +65,7 @@
                             {{ this._dataService.GetUserById(comment.OwnerId).Firstname + ' ' + this._dataService.GetUserById(comment.OwnerId).Surname }}
                         </div>
                         <div class="col-xs-6 text-right">
-                            {{ mu.FormatDate(comment.PostDate) }}
+                            {{ (comment.PostDate | formatAsUKDate) + ", @" + (comment.PostDate | formatAs24HourTime) }}
                         </div>
                         <div class="col-xs-12">
                             {{ comment.Comment }}

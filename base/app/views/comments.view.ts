@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Route, Router } from '@angular/router';
-import { MiscUtil } from './../helpers/MiscUtils';
+import { Route, Router } from '@angular/router'; 
+import { FormatAsUKDatePipe, FormatAs24HourTimePipe } from './../pipes/fomatdate.pipe';
 import { IUser } from './../entities/user.entity';
 import { INotes } from './../entities/notes.entity';
 import { IComment } from './../entities/comment.entity';
+import { NumberUtil } from './../helpers/NumberUtil';
 import { LoginService } from 'app/services/login.service';
 import { DataService } from 'app/services/data.service';
 import { CommunicationService } from './../services/communication.service';
@@ -14,8 +15,7 @@ import { FormControl, FormGroup, FormBuilder, Validators } from "@angular/forms"
     templateUrl: './templates/comments.template.html'
 })
 
-export class CommentComponent implements OnInit {
-    public mu = new MiscUtil();
+export class CommentComponent implements OnInit { 
     private noteId: number;
     public showCommentForm: boolean = false;
     public commentsCollection: Array<IComment> = Array<IComment>();
@@ -55,11 +55,11 @@ export class CommentComponent implements OnInit {
             }
         } else {
             let controls = this.commentEntryForm.controls,
-                user = this._loginService.GetUserDetails();
+                user = this._dataService.GetCurrentUserDetails();
             console.log(controls);
 
             let newComment = <IComment>{
-                Id: MiscUtil.GetRandomNumber(),
+                Id: NumberUtil.GetRandomNumber(),
                 NoteId: this.noteId,
                 OwnerId: user.Id,
                 Comment: controls.comment.value,

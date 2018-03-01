@@ -18,7 +18,7 @@
                         <tr *ngFor="let note of this.noteCollection; let i=index;" (click)="NavigateToDetails(note.Id)">
                             <td>{{ note.OwnerDetails.Firstname + " " + note.OwnerDetails.Surname }}</td>
                             <td>{{ note.Title }}</td>
-                            <td [innerText]="mu.FormatDate(note.PostDate)"></td>
+                            <td [innerText]="(note.PostDate | formatAsUKDate) + ' at ' + (note.PostDate | formatAs24HourTime)"></td>
                         </tr>
                     </tbody>
                     <tfoot>

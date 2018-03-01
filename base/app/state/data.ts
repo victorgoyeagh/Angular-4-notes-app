@@ -31,7 +31,7 @@ export const initNotes = <Array<INotes>>[
         Id: 1,
         OwnerId: 1,
         Title: "This is a note",
-        Description: "Henry's note description",
+        Description: "Note for Henry description",
         PostDate: Date.now()
     },
     {

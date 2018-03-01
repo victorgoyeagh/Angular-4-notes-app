@@ -4,8 +4,11 @@ import { IUser } from './../entities/user.entity';
 import { UserActions } from './../state/state.actions';
 import { DataService } from './../services/data.service';
 import { Cookie } from 'ng2-cookies';
+
+import { createStore } from 'redux';
+import { RootReducer } from '../state/state.store';
 import { NgRedux } from 'ng2-redux';
-import { error } from 'selenium-webdriver';
+const store = createStore(RootReducer, {});
 
 
 @Injectable()
@@ -21,9 +24,7 @@ export class LoginService {
     }
 
     LogOut(){
-        this._store.dispatch({
-            type: UserActions.USER_REMOVE
-        });
+        this._dataService.RemoveUser();
         Cookie.delete("userisloggedin");
         this._router.navigate(['login']);
         this.userIsLoggedIn = false;
@@ -51,14 +52,11 @@ export class LoginService {
     }
 
     CheckLogin(){
-        this.currentUser = <IUser>this._store.getState().user.CurrentUser;
+        this.currentUser = <IUser>this._dataService.GetCurrentUserDetails();
         let userLoggenIn = (this.currentUser != undefined);
 
         if(!userLoggenIn) 
             this._router.navigate(['/login']);
     }
 
-    GetUserDetails(){
-        return <IUser>this._store.getState().user.CurrentUser;
-    }
 }

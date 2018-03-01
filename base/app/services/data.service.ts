@@ -90,6 +90,16 @@ export class DataService {
         return foundUser;
     }
 
+    GetCurrentUserDetails(){
+        return <IUser>this._store.getState().user.CurrentUser;
+    }
+
+    RemoveUser(){
+        this._store.dispatch({
+            type: UserActions.USER_REMOVE
+        });
+    }
+
     SaveCommentData(comment: IComment) {
         this._store.dispatch({
             type: CommentActions.COMMENT_SAVE,

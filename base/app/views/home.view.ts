@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { Route, Router, NavigationExtras } from '@angular/router';
-import { MiscUtil } from './../helpers/MiscUtils';
+import { Route, Router, NavigationExtras } from '@angular/router'; 
 import { INotes } from './../entities/notes.entity';
 import { IUser } from './../entities/user.entity';
+import { FormatAsUKDatePipe, FormatAs24HourTimePipe } from './../pipes/fomatdate.pipe';
+import { NumberUtil } from './../helpers/NumberUtil';
+import { DateUtil } from './../helpers/DateUtil';
 import { CommunicationService } from './../services/communication.service';
 import { LoginService } from 'app/services/login.service';
 import { DataService } from 'app/services/data.service';
@@ -13,12 +15,13 @@ import { DataService } from 'app/services/data.service';
     templateUrl: './templates/home.template.html'
 })
 
-export class HomeComponent {
-    public mu = new MiscUtil();
+export class HomeComponent { 
     private currentUser: IUser;
+    public DateUtil = DateUtil;
     public noteCollection: Array<INotes> = new Array<INotes>();
     private showNoteForm: boolean = false;
     private textRestrictRegex = new RegExp("^[0-9,a-z,A-Z ,.'-]+$");
+
     private noteEntryForm = new FormGroup({
         noteTitle: new FormControl("", [
             Validators.required,
@@ -38,7 +41,7 @@ export class HomeComponent {
     ) {
         this._loginService.CheckLogin();
 
-        this.currentUser = this._loginService.GetUserDetails();
+        this.currentUser = this._dataService.GetCurrentUserDetails();
         this.noteCollection = this._dataService.GetNotesData();
     }
 
@@ -72,14 +75,14 @@ export class HomeComponent {
             }
         } else {
             let controls = this.noteEntryForm.controls,
-                user = <IUser>this._loginService.GetUserDetails(),
+                user = <IUser>this._dataService.GetCurrentUserDetails(),
                 userId = user.Id;
 
             console.log(userId);
 
             //submit form vars
             let newNote = <INotes>{
-                Id: MiscUtil.GetRandomNumber(),
+                Id: NumberUtil.GetRandomNumber(),
                 OwnerId: userId,
                 Title: controls.noteTitle.value,
                 Description: controls.noteDescription.value,

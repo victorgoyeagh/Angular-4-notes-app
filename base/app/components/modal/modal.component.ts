@@ -4,7 +4,7 @@ import { Http, Response, RequestOptions, ResponseContentType, Headers } from '@a
 import { BrowserModule, DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { IDimensions, ModalFormType, ModalCommand, ModalType, ModalInfo, ModalLocation, IModalReturnValue } from './../../entities/modal.entity';
 import { BsModalModule, BsModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
-import { MiscUtil } from './../../helpers/MiscUtils';
+import { NumberUtil } from './../../helpers//NumberUtil';
 import { ClassHelper } from './../../helpers/ClassUtil';
 import { Subject, Subscription, Observable} from 'rxjs';
 import { environment } from 'environments/environment.dev';
@@ -183,7 +183,7 @@ export class ModalOverlayComponent implements OnInit, OnChanges, AfterViewInit {
             ModalResponse: response,
             ModalValue: this.modalValue,
             ModalFormValue: formValues,
-            random: MiscUtil.GetRandomNumber()
+            random: NumberUtil.GetRandomNumber()
         }
 
         this._communicationService.ShareModalResponseData(this.modalResponseObj);
