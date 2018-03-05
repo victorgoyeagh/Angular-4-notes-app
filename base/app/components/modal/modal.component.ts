@@ -13,7 +13,8 @@ import { CommunicationService } from 'app/services/communication.service';
 @Component({
     selector: 'e-modal',
     templateUrl: './templates/modal.template.html',
-    inputs: ['']
+    inputs: [''],
+    styleUrls: ["./modal.component.scss"]
 })
 
 export class ModalOverlayComponent implements OnInit, OnChanges, AfterViewInit {
