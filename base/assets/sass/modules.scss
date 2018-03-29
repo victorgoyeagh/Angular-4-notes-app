@@ -1,6 +1,14 @@
+/* global */
+
 @import 'includes/variables.scss'; 
 @import 'includes/normalise.scss';
 @import 'includes/mixins.scss';
-@import 'includes/layout.scss';
+@import 'includes/forms.scss';
 @import 'includes/base.scss';
 @import 'includes/fonts.scss';
+@import 'includes/bootstrap.scss';
+
+/* components */
+@import 'includes/components/modal.scss';
+@import 'includes/components/login.scss';
+

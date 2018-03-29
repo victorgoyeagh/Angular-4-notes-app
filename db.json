@@ -1,0 +1,69 @@
+{
+    "users": [
+        {
+            "Id": 1,
+            "Firstname": "Sarah",
+            "Surname": "Jones",
+            "ProfileImage": "sarah-jones.jpg"
+        },
+        {
+            "Id": 2,
+            "Firstname": "James",
+            "Surname": "Mandarin",
+            "ProfileImage": "james-mandarin.jpg"
+        }
+    ],
+    "credentials": [
+        {
+            "Id": 1,
+            "UserId": 1,
+            "Email": "sarah.jones@mycompany.com",
+            "Password": "mainclient"
+        },
+        {
+            "Id": 10,
+            "UserId": 2,
+            "Email": "james.mandarin@hotmail.com",
+            "Password": "jamesthaman"
+        }
+    ],
+    "notes": [
+        {
+            "Id": 1,
+            "OwnerId": 1,
+            "Title": "This is a note",
+            "Description": "Note for Henry description",
+            "PostDate": 1522272873053
+        },
+        {
+            "Id": 2,
+            " OwnerId": 2,
+            "Title": "This is another note",
+            "Description": "My note description",
+            "PostDate": 1522272873053
+        }
+    ],
+    "comments": [
+        {
+            "Id": 20,
+            "OwnerId": 1,
+            "NoteId": 2,
+            "Comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras varius.Curabitur molestie tortor ac hendrerit laoreet. Sed convallis lacinia consectetur.",
+            "PostDate": 1522272873053
+        },
+        {
+            "Id": 21,
+            "OwnerId": 1,
+            "NoteId": 2,
+            "Comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras varius leo a efficitur ullamcorper. Curabitur molestie tortor ac hendrerit laoreet. Sed convallis lacinia consectetur.",
+            "PostDate": 1522272873053
+        },
+        {
+            "Id": 23,
+            "OwnerId": 2,
+            "NoteId": 1,
+            "Comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget eleifend orci. Curabitur molestie tortor ac hendrerit laoreet. Sed convallis lacinia consectetur.",
+            "PostDate": 1522272873053
+        }
+    ]
+}

@@ -10,7 +10,7 @@ export const initUsers = <Array<IUser>>[
         Surname: "Jones",
         Credentials: {
             Email: "sarah.jones@mycompany.com",
-            Password: "yopaclient"
+            Password: "mainclient"
         },
         ProfileImage: "sarah-jones.jpg"
     },

@@ -1,7 +1,7 @@
 import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule, RouterLinkActive } from '@angular/router';
 import { HomeComponent } from '../views/home.view';
-import { LoginComponent } from '../views/login.view';
+import { LoginPage } from '../views/login.view';
 import { CommentComponent } from '../views/comments.view';
 import { PageNotFoundComponent } from './../views/pagenotfound.view';
 
@@ -13,7 +13,7 @@ const appRoutes: Routes = [
     },
     {
         path: 'login',
-        component: LoginComponent,
+        component: LoginPage,
         pathMatch: 'full'
     },
     {

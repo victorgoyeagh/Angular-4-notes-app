@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ModalOverlayComponent } from './components/modal/modal.component';
 
 @Component({
@@ -6,14 +6,10 @@ import { ModalOverlayComponent } from './components/modal/modal.component';
     templateUrl: './base.template.html'
 })
 
-export class BaseComponent implements OnInit {
+export class BaseComponent {
 
     constructor() {
     }
-
-    ngOnInit() {
-    }
-  
 }
 
 

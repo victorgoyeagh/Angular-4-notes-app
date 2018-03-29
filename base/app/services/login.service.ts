@@ -18,8 +18,7 @@ export class LoginService {
 
     constructor(
         private _router: Router,
-        private _dataService: DataService,
-        private _store: NgRedux<any>,
+        private _dataService: DataService
     ){
     }
 

@@ -1,6 +1,6 @@
 import { browser, element, by } from 'protractor';
 
-export class YopaPage {
+export class Page {
   navigateTo() {
     return browser.get('/');
   }

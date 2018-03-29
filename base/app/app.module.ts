@@ -17,11 +17,13 @@ import { FormatAsUKDatePipe, FormatAs24HourTimePipe } from './pipes/fomatdate.pi
 import { SortByPipe } from './pipes/sort.pipe';
 import { FilterPipe } from './pipes/filter.pipe';
 
+/* views */
+import { LoginPage } from './views/login.view';
 
 /* components */
 import { Routing } from './routers/routing.route';
 import { PageNotFoundComponent } from './views/pagenotfound.view';
-import { LoginComponent } from './views/login.view';
+import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './views/home.view';
 import { MainComponent } from './views/main.view';
 import { CommentComponent } from './views/comments.view';
@@ -47,6 +49,7 @@ import { DataService } from './services/data.service';
         FooterComponent,
         NavigationComponent,
         MainComponent,
+        LoginPage,
         LoginComponent,
         CommentComponent,
         ModalOverlayComponent

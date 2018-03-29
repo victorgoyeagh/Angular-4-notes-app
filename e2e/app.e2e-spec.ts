@@ -1,4 +1,4 @@
-import { YopaPage } from './app.po';
+import { Page } from './app.po';
 import { TestBed, inject } from '@angular/core/testing';
 import { LoginService } from './../base/app/services/login.service';
 import { DataService } from './../base/app/services/data.service';
@@ -6,10 +6,10 @@ import { IUser } from './../base/app/entities/user.entity';
 import { INotes } from '../base/app/entities/notes.entity';
 
 describe('Init success', function () {
-	let page: YopaPage;
+	let page: Page;
 
 	beforeEach(() => {
-		page = new YopaPage();
+		page = new Page();
 	});
 
 	it('Check title display', () => {
@@ -19,7 +19,7 @@ describe('Init success', function () {
 });
 
 describe('Login tests', function () {
-	let page: YopaPage;
+	let page: Page;
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
