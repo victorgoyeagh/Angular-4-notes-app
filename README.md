@@ -8,3 +8,4 @@ via bash or terminal...
 - run "npm start"
 - open localhost:4200 in chrome browser
 
+# brand
