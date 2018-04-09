@@ -7,13 +7,15 @@ import { LoginService } from './../../services/login.service';
 })
 
 export class NavigationComponent {
+    public userIsLoggedIn: boolean = false;
 
     constructor(
         private _loginService: LoginService
     ){  
+        this.userIsLoggedIn = this._loginService.UserIsLoggedIn();
     }
 
-    Logout(){
+    LogOutUser(){
         this._loginService.LogOut();
     }
 }

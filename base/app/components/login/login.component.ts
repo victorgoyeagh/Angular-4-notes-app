@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { FormValidator } from './../../helpers/FormValidatorUtil';
 import { LoginService } from './../../services/login.service';
 import { ModalInfo, ModalCommand, ModalFormType, ModalLocation, ModalType } from './../../entities/modal.entity';
 import { CommunicationService } from './../../services/communication.service';
@@ -10,16 +11,14 @@ import { CommunicationService } from './../../services/communication.service';
 })
 
 export class LoginComponent {
-    private pwPattern = new RegExp("^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$");
-    private emailRegex = new RegExp("^([a-zA-Z0-9_.-]+)@([a-zA-Z0-9_.-]+)\\.([a-zA-Z]{2,5})$");
     private pwMinLength: number = 5;
 
     private logInForm = new FormGroup({
-        email: new FormControl('sarah.jones@mycompany.com', [
+        email: new FormControl('test.ing@test.com', [
             Validators.required,
-            Validators.pattern(this.emailRegex)
+            Validators.pattern(FormValidator.emailRegex)
         ]),
-        password: new FormControl('mainclient', [
+        password: new FormControl('password', [
             Validators.required,
             Validators.minLength(this.pwMinLength)
         ])
@@ -40,10 +39,10 @@ export class LoginComponent {
                 this.logInForm.controls[i].markAsTouched();
             }
         } else {
-            let un = this.logInForm.controls.email.value,
-                pw = this.logInForm.controls.password.value;
-
-            this._loginService.LogInUser(un, pw);
+            let username = this.logInForm.controls.email.value,
+                password = this.logInForm.controls.password.value;
+ 
+            this._loginService.FindUser(username, password);
         }
     }
 

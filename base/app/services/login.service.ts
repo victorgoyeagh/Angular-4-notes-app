@@ -1,61 +1,105 @@
 import { Injectable } from '@angular/core';
 import { Route, Router } from '@angular/router';
-import { IUser } from './../entities/user.entity';
+import { Http, Headers, RequestOptionsArgs, URLSearchParams } from '@angular/http';
+import { IUser, IUserCredentials } from './../entities/user.entity';
+import { StateProviderActions } from './../entities/data.entity';
 import { UserActions } from './../state/state.actions';
+import { StateProviderService } from './stateprovider.service'
 import { DataService } from './../services/data.service';
 import { Cookie } from 'ng2-cookies';
 
 import { createStore } from 'redux';
 import { RootReducer } from '../state/state.store';
 import { NgRedux } from 'ng2-redux';
-const store = createStore(RootReducer, {});
+import { environment } from "../../environments/environment";
 
 
 @Injectable()
 export class LoginService {
+    private headers: Headers;
+    private usersTableUrl: string = environment.configurations.api.urls.usersTable;
+    private credentialsTable: string = environment.configurations.api.urls.credentialsTable;
+
+    private userId: number = undefined;
     private currentUser: IUser;
-    public userIsLoggedIn:boolean = false;
 
     constructor(
         private _router: Router,
-        private _dataService: DataService
-    ){
+        private _stateProviderService: StateProviderService,
+        private _dataService: DataService,
+        private _http: Http
+    ) {
+        this.headers = new Headers();
+        this.headers.append('Content-Type', 'application/json')
     }
 
-    LogOut(){
-        this._dataService.RemoveUser();
-        Cookie.delete("userisloggedin");
-        this._router.navigate(['login']);
-        this.userIsLoggedIn = false;
+    public FindUser(username, password) {
+
+        let params = new URLSearchParams();
+        params.set('Email', username.toString());
+        params.set('Password', password.toString());
+
+        let requestOptionsArgs = <RequestOptionsArgs>{
+            params: params,
+            headers: this.headers
+        };
+
+        return this._http.get(this.credentialsTable, requestOptionsArgs).map((response) => response.json())
+            .subscribe((userCredentials: Array<IUserCredentials>) => {
+
+                let userCreds = userCredentials[0];
+                if (userCreds) {
+                    this.userId = userCreds.Id;
+                    this.LogInByUserId(userCreds.Id);
+                } else {
+                    console.log("User not found");
+                    (<any>window).alert("User not found");
+                }
+            });
     }
 
-    LogInUser(username: string, password: string){
+    public LogInByUserId(userId: number) {
 
-        let userDetails = <IUser>this._dataService.FindUser(username, password);
-        if(userDetails){
-
-            //get user details
-            let loggedInUser = <IUser>this._dataService.GetUserDetails(userDetails.Credentials.Email);
-            
-            //wont usually store user crendetials, just details 
-            Cookie.set("userisloggedin", JSON.stringify(loggedInUser), 12);
-            this.userIsLoggedIn = true;
-
-            //redirect to home
-            this._router.navigate(['/']);
-        } else {
-            console.log("User not found");
-            (<any>window).alert("User not found");
-            //throw new Error("Sorry no such user was found");
+        if (!userId) {
+            return;
         }
+
+        let params = new URLSearchParams();
+        params.set('UserId', userId.toString());
+
+        let requestOptionsArgs = <RequestOptionsArgs>{
+            params: params,
+            headers: this.headers
+        };
+
+        this._http.get(this.usersTableUrl, requestOptionsArgs).map((response) => response.json())
+            .subscribe((user: IUser) => {
+
+                if (user) {
+                    this.currentUser = user;
+                    this._stateProviderService.ManageUserInState(StateProviderActions.Save, this.currentUser);
+                    this._router.navigate(['/']);
+                }
+                else {
+                    console.log("User details not found");
+                    (<any>window).alert("User details not found");
+                    //throw new Error("Sorry no such user was found");
+                }
+            });
     }
 
-    CheckLogin(){
-        this.currentUser = <IUser>this._dataService.GetCurrentUserDetails();
-        let userLoggenIn = (this.currentUser != undefined);
+    public LogOut() {
+        this._stateProviderService.ManageUserInState(StateProviderActions.Remove, this.currentUser);
+        this._router.navigate(['/login']);
+    }
 
-        if(!userLoggenIn) 
+    public CheckLogin() {
+        if (!this.UserIsLoggedIn())
             this._router.navigate(['/login']);
     }
 
+    public UserIsLoggedIn() {
+        this.currentUser = <IUser>this._stateProviderService.ManageUserInState(StateProviderActions.Retrieve);
+        return (this.currentUser != undefined);
+    }
 }

@@ -11,6 +11,12 @@
             "Firstname": "James",
             "Surname": "Mandarin",
             "ProfileImage": "james-mandarin.jpg"
+        },
+        {
+            "Id": 3,
+            "Firstname": "Test",
+            "Surname": "Ing",
+            "ProfileImage": "test.jpg"
         }
     ],
     "credentials": [
@@ -25,6 +31,12 @@
             "UserId": 2,
             "Email": "james.mandarin@hotmail.com",
             "Password": "jamesthaman"
+        },
+        {
+            "Id": 11,
+            "UserId": 3,
+            "Email": "test.ing@test.com",
+            "Password": "password"
         }
     ],
     "notes": [
@@ -37,7 +49,7 @@
         },
         {
             "Id": 2,
-            " OwnerId": 2,
+            "OwnerId": 2,
             "Title": "This is another note",
             "Description": "My note description",
             "PostDate": 1522272873053

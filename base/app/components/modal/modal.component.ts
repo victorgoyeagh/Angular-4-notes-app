@@ -5,7 +5,7 @@ import { BrowserModule, DomSanitizer, SafeHtml } from '@angular/platform-browser
 import { IDimensions, ModalFormType, ModalCommand, ModalType, ModalInfo, ModalLocation, IModalReturnValue } from './../../entities/modal.entity';
 import { BsModalModule, BsModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
 import { NumberUtil } from './../../helpers//NumberUtil';
-import { ClassHelper } from './../../helpers/ClassUtil';
+import { ClassUtil } from './../../helpers/ClassUtil';
 import { Subject, Subscription, Observable} from 'rxjs';
 import { environment } from 'environments/environment.dev';
 import { CommunicationService } from 'app/services/communication.service';
@@ -124,12 +124,10 @@ export class ModalOverlayComponent implements OnInit, OnChanges, AfterViewInit {
             this.locationClass = 'center';
         }
 
+        //update modal location
         let modalDialog = <HTMLDivElement>document.querySelector('.modal-dialog');
-        let ch = new ClassHelper(modalDialog);
-        ch.removeClass('center');
-        ch.removeClass('right');
-        ch.removeClass('left');
-        ch.addClass(this.locationClass);
+        ClassUtil.RemoveClasses(['center', 'right', 'left'], modalDialog); 
+        ClassUtil.AddClass(this.locationClass, modalDialog);
 
     }
     

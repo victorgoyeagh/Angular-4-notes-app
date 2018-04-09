@@ -36,6 +36,10 @@ import { ModalOverlayComponent } from './components/modal/modal.component';
 /* services */
 import { CommunicationService } from './services/communication.service';
 import { LoginService } from './services/login.service';
+import { StateProviderService } from './services/stateprovider.service';
+import { DataProviderService } from './services/dataprovider.service';
+import { NotesService } from './services/notes.service';
+import { UserService } from './services/user.service';
 import { DataService } from './services/data.service';
 
 @NgModule({
@@ -69,6 +73,10 @@ import { DataService } from './services/data.service';
     providers: [
         CommunicationService,
         LoginService,
+        StateProviderService,
+        DataProviderService,
+        NotesService,
+        UserService,
         DataService
     ],
     bootstrap:  [

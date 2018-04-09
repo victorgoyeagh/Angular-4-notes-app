@@ -1,0 +1,14 @@
+.loader {
+    width: 100%;
+    text-align: center;
+    height: 100%;
+    position: fixed;
+    display: table;
+    //background-color: $color-map-bg;
+  
+    &__cont {
+      display: table-cell;
+      vertical-align: middle;
+    }
+  }
+  

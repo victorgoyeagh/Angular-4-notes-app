@@ -8,7 +8,8 @@ import { environment } from './../../../environments/environment';
 })
 
 export class HeaderComponent implements OnInit {
-
+    private siteName = environment.configurations.settings.siteName;
+    
     constructor(
         private _sanitizer: DomSanitizer,
     ) {

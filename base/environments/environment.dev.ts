@@ -2,7 +2,21 @@ export const environment = {
     production: false,
     envName: 'dev',
     configurations: {
-        
+        names: {
+            cookieUserStr: "C_CURRENT_USER"
+        },
+        settings: {
+            siteName: "Notes App"
+        },
+        api: {
+            domain: "http://localhost:3000/",
+            urls:{
+                credentialsTable: "http://localhost:3000/credentials",
+                usersTable: "http://localhost:3000/users",
+                commentsTable: "http://localhost:3000/comments",
+                notesTable: "http://localhost:3000/notes"
+            }
+        },
         uiConfig: {
             bypassLoadingBay: false,
             modalDefaultDimensions: {

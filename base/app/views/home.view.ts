@@ -1,14 +1,20 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Route, Router, NavigationExtras } from '@angular/router'; 
-import { INotes } from './../entities/notes.entity';
+import { INote } from './../entities/notes.entity';
 import { IUser } from './../entities/user.entity';
+import { StateProviderActions } from './../entities/data.entity';
 import { FormatAsUKDatePipe, FormatAs24HourTimePipe } from './../pipes/fomatdate.pipe';
 import { NumberUtil } from './../helpers/NumberUtil';
 import { DateUtil } from './../helpers/DateUtil';
 import { CommunicationService } from './../services/communication.service';
 import { LoginService } from 'app/services/login.service';
-import { DataService } from 'app/services/data.service';
+import { UserService } from './../services/user.service';
+import { StateProviderService } from 'app/services/stateprovider.service';
+import { NotesService } from 'app/services/notes.service';
+import { forEach } from '@angular/router/src/utils/collection';
+import { UserActions } from 'app/state/state.actions';
+import { environment } from './../../environments/environment';
 
 @Component({
     selector: 'home',
@@ -17,8 +23,10 @@ import { DataService } from 'app/services/data.service';
 
 export class HomeComponent { 
     private currentUser: IUser;
+    private usersTableUrl: string = environment.configurations.api.urls.usersTable;
     public DateUtil = DateUtil;
-    public noteCollection: Array<INotes> = new Array<INotes>();
+    public noteCollection: Array<INote>;
+    public noteOwners: Array<IUser>;
     private showNoteForm: boolean = false;
     private textRestrictRegex = new RegExp("^[0-9,a-z,A-Z ,.'-]+$");
 
@@ -34,15 +42,40 @@ export class HomeComponent {
     });
 
     constructor(
+        private _notesService: NotesService,
+        private _userService: UserService,
         private _router: Router,
-        private _dataService: DataService,
+        private _stateProviderService: StateProviderService,
         private _loginService: LoginService,
         private _communicationService: CommunicationService
     ) {
         this._loginService.CheckLogin();
+        this.currentUser = <IUser>this._stateProviderService.ManageUserInState(StateProviderActions.Retrieve);
+        this.noteCollection = new Array<INote>();
+        
+        this._notesService.GetAllNotes().subscribe((allNotes: Array<INote>) => {
+            
+            let ownerIds: Array<number>;
+            if(allNotes.length > 0){ 
+                ownerIds = allNotes.map((item) => item.OwnerId);
 
-        this.currentUser = this._dataService.GetCurrentUserDetails();
-        this.noteCollection = this._dataService.GetNotesData();
+                this._userService.GetUsersById(ownerIds).subscribe((users: Array<IUser>) => {
+                    this.noteOwners = users;
+
+                    allNotes.forEach((note:INote) => {
+                        note.OwnerDetails = this.noteOwners.filter((noteOwner) => {
+                            return note.OwnerId == noteOwner.Id
+                        })[0];
+                        this.noteCollection.push(note);
+                    });
+
+                });
+            }
+        });
+    }
+
+    GetOwnerDetailsById(userId: number){
+
     }
 
     NavigateToDetails(noteId: number) {
@@ -75,13 +108,11 @@ export class HomeComponent {
             }
         } else {
             let controls = this.noteEntryForm.controls,
-                user = <IUser>this._dataService.GetCurrentUserDetails(),
+                user = this.currentUser,
                 userId = user.Id;
 
-            console.log(userId);
-
             //submit form vars
-            let newNote = <INotes>{
+            let newNote = <INote>{
                 Id: NumberUtil.GetRandomNumber(),
                 OwnerId: userId,
                 Title: controls.noteTitle.value,
@@ -90,9 +121,9 @@ export class HomeComponent {
                 OwnerDetails: user
             };
 
-            _self._dataService.SaveNotesData(newNote);
-            this.noteCollection = this._dataService.GetNotesData();
-            this.CancelAddNote();
+            //_self._dataService.SaveNotesData(newNote);
+            //this.noteCollection = this._dataService.GetNotesData();
+            //this.CancelAddNote();
         }
     }
 

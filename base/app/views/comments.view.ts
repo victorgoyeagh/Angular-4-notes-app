@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Route, Router } from '@angular/router'; 
 import { FormatAsUKDatePipe, FormatAs24HourTimePipe } from './../pipes/fomatdate.pipe';
 import { IUser } from './../entities/user.entity';
-import { INotes } from './../entities/notes.entity';
+import { INote } from './../entities/notes.entity';
 import { IComment } from './../entities/comment.entity';
 import { NumberUtil } from './../helpers/NumberUtil';
 import { LoginService } from 'app/services/login.service';
@@ -20,7 +20,7 @@ export class CommentComponent implements OnInit {
     public showCommentForm: boolean = false;
     public commentsCollection: Array<IComment> = Array<IComment>();
     private textRestrictRegex = new RegExp("^[0-9,a-z,A-Z ,.'-]+$");
-    public noteObj: INotes;
+    public noteObj: INote;
     private commentEntryForm = new FormGroup({
         comment: new FormControl("", [
             Validators.required,

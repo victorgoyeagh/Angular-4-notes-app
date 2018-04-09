@@ -1,18 +1,14 @@
 import { combineReducers, Reducer, createStore } from 'redux';
 import { UserActions, NoteActions, UserCollectionActions, CommentActions } from './state.actions';
 import { IUser, IUserCredentials } from './../entities/user.entity';
-import { INotes } from './../entities/notes.entity';
+import { INote } from './../entities/notes.entity';
 import { IComment } from './../entities/comment.entity';
 import { initUsers, initNotes, initComments } from './data';
 
 /*** init states ***/
 
 export interface INotesReducer {
-    Notes: Array<INotes>
-}
-
-export interface IUserCollectionReducer {
-    Users: Array<IUser>
+    Notes: Array<INote>
 }
 
 export interface ILoggedInUser {
@@ -27,7 +23,7 @@ export interface ICommentsReducer {
     Comments: Array<IComment>
 }
 
-let lsNotes = (localStorage.getItem("notes") ? <Array<INotes>>JSON.parse(localStorage.getItem("notes")) : undefined);
+let lsNotes = (localStorage.getItem("notes") ? <Array<INote>>JSON.parse(localStorage.getItem("notes")) : undefined);
 let dbNotes = (lsNotes) ? lsNotes : initNotes;
 export const notesReducerInitState = {
     Notes: dbNotes
@@ -39,16 +35,11 @@ export const commentsReducerInitState = {
     Comments: dbComments
 }
 
-export const userCollectionReducerInitState = {
-    Users: initUsers
-}
-
 export const userReducerInitState = {
     CurrentUser: undefined
 }
 
 export const appInitialState = {
-    userCollectionReducerInitState,
     notesReducerInitState,
     userReducerInitState,
     commentsReducerInitState
@@ -80,24 +71,6 @@ export function notesReducer(state: INotesReducer = notesReducerInitState, actio
     }
 }
 
-export function usersCollectionReducer(state: IUserCollectionReducer = userCollectionReducerInitState, action) {
-
-    switch (action.type) {
-        case UserCollectionActions.FIND_USER:
-
-            let foundUser: IUser = undefined;
-            state.Users.forEach((user) => {
-                if ((user.Credentials.Email == action.payload[0]) && (user.Credentials.Password == action.payload[1])) {
-                    return user;
-                } else {
-                    return undefined
-                }
-            });
-        default:
-            return state;
-    }
-}
-
 export function userReducer(state: ILoggedInUser = userReducerInitState, action) {
     switch (action.type) {
         case UserActions.USER_SET:
@@ -114,7 +87,6 @@ export function userReducer(state: ILoggedInUser = userReducerInitState, action)
 }
 
 export const RootReducer = combineReducers({
-    userCollection: usersCollectionReducer,
     user: userReducer,
     notes: notesReducer,
     comments: commentsReducer

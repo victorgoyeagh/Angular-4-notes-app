@@ -1,6 +1,6 @@
 import { IUser } from './user.entity';
 
-export interface INotes {
+export interface INote {
     Id: number,
     OwnerId: number,
     Title: string;

@@ -1,4 +1,4 @@
-import { INotes } from './../entities/notes.entity';
+import { INote } from './../entities/notes.entity';
 import { IComment } from './../entities/comment.entity';
 import { IUser } from './../entities/user.entity';
 
@@ -26,7 +26,7 @@ export const initUsers = <Array<IUser>>[
     }
 ];
 
-export const initNotes = <Array<INotes>>[
+export const initNotes = <Array<INote>>[
     {
         Id: 1,
         OwnerId: 1,

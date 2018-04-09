@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
-import { INotes } from './../entities/notes.entity';
+import { INote } from './../entities/notes.entity';
 import { IUser } from './../entities/user.entity';
 import { UserActions, UserCollectionActions, NoteActions, CommentActions } from './../state/state.actions';
 import { IComment } from './../entities/comment.entity';
 import { NgRedux } from 'ng2-redux';
+import { environment } from "../../environments/environment";
 
 @Injectable()
 export class DataService {
+    private usersTableUrl: string = environment.configurations.api.urls.usersTable;
 
     constructor(
         private _store: NgRedux<any>
@@ -23,8 +25,8 @@ export class DataService {
     }
 
     GetNoteById(noteId: number) {
-        let notesData = <Array<INotes>>this._store.getState().notes["Notes"],
-            retNotes = Array.from(notesData).filter((note: INotes) => {
+        let notesData = <Array<INote>>this._store.getState().notes["Notes"],
+            retNotes = Array.from(notesData).filter((note: INote) => {
                 return note.Id == noteId;
             });
         return retNotes[0];
@@ -45,12 +47,12 @@ export class DataService {
     }
 
     GetNotesData() {
-        let notesData = <Array<INotes>>this._store.getState().notes["Notes"];
+        let notesData = <Array<INote>>this._store.getState().notes["Notes"];
 
         var allUsers = this.GetAllUsersData()["Users"];
-        var notesCollection = new Array<INotes>();
+        var notesCollection = new Array<INote>();
 
-        Array.from(notesData).forEach((note: INotes) => {
+        Array.from(notesData).forEach((note: INote) => {
             let user = <Array<IUser>>allUsers.filter((user: IUser) => {
                 return user.Id == note.OwnerId;
             });
@@ -107,7 +109,7 @@ export class DataService {
         })
     }
 
-    SaveNotesData(note: INotes) {
+    SaveNotesData(note: INote) {
         this._store.dispatch({
             type: NoteActions.SAVE_NOTE,
             payload: [note]

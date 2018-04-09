@@ -5,10 +5,12 @@
 @import 'includes/mixins.scss';
 @import 'includes/forms.scss';
 @import 'includes/base.scss';
+@import 'includes/global.scss';
 @import 'includes/fonts.scss';
 @import 'includes/bootstrap.scss';
 
 /* components */
 @import 'includes/components/modal.scss';
 @import 'includes/components/login.scss';
+@import 'includes/components/comments.scss';
 
