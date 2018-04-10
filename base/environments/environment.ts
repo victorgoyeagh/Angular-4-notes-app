@@ -3,7 +3,7 @@ export const environment = {
     envName: 'dev',
     configurations: {
         names: {
-            cookieUserStr: "C_CURRENT_USER"
+            cookieUserStr: "E_APP_USER"
         },
         settings: {
             siteName: "Notes App"
