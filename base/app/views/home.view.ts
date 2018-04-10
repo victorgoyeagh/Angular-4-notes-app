@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { Route, Router, NavigationExtras } from '@angular/router'; 
+import { Route, Router, NavigationExtras } from '@angular/router';
 import { INote } from './../entities/notes.entity';
 import { IUser } from './../entities/user.entity';
 import { StateProviderActions } from './../entities/data.entity';
@@ -21,7 +21,7 @@ import { environment } from './../../environments/environment';
     templateUrl: './templates/home.template.html'
 })
 
-export class HomeComponent { 
+export class HomeComponent implements OnInit {
     private currentUser: IUser;
     private usersTableUrl: string = environment.configurations.api.urls.usersTable;
     public DateUtil = DateUtil;
@@ -50,19 +50,22 @@ export class HomeComponent {
         private _communicationService: CommunicationService
     ) {
         this._loginService.CheckLogin();
+    }
+
+    ngOnInit() {
         this.currentUser = <IUser>this._stateProviderService.ManageUserInState(StateProviderActions.Retrieve);
         this.noteCollection = new Array<INote>();
-        
+
         this._notesService.GetAllNotes().subscribe((allNotes: Array<INote>) => {
-            
+
             let ownerIds: Array<number>;
-            if(allNotes.length > 0){ 
+            if (allNotes.length > 0) {
                 ownerIds = allNotes.map((item) => item.OwnerId);
 
                 this._userService.GetUsersById(ownerIds).subscribe((users: Array<IUser>) => {
                     this.noteOwners = users;
 
-                    allNotes.forEach((note:INote) => {
+                    allNotes.forEach((note: INote) => {
                         note.OwnerDetails = this.noteOwners.filter((noteOwner) => {
                             return note.OwnerId == noteOwner.Id
                         })[0];
@@ -74,7 +77,7 @@ export class HomeComponent {
         });
     }
 
-    GetOwnerDetailsById(userId: number){
+    GetOwnerDetailsById(userId: number) {
 
     }
 
