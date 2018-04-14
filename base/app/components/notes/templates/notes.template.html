@@ -1,0 +1,105 @@
+<section>
+    <header>
+        <h3>Notes Overview</h3>
+    </header>
+
+    <!-- split to 2 components-->
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead class="thead-inverse">
+                        <tr>
+                            <th>Created by</th>
+                            <th>Title</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let note of this.noteCollection; let i=index;" (click)="NavigateToDetails(note.Id)">
+                            <td>{{ note.OwnerDetails.Firstname + " " + note.OwnerDetails.Surname }}</td>
+                            <td>{{ note.Title }}</td>
+                            <td [innerText]="(note.PostDate | formatAsUKDate) + ' at ' + (note.PostDate | formatAs24HourTime)"></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <button class="btn btn-default btn-sm btn-brand" (click)="this.ToggleShowNoteForm()">Create a new note</button>
+        </div>
+    </div>
+</section>
+
+<section *ngIf="showNoteForm">
+    <header>
+        <h3>Add Note</h3>
+    </header>
+    <div class="row">
+
+        <div class="col-xs-12">
+            <form class="form" [formGroup]="noteEntryForm" novalidate autocomplete="false">
+
+                <div class="form-group">
+                    <label for="noteTitle" class="control-label required">Title
+                        <sup class="asterix">*</sup>
+                    </label>
+                    <input autofocus tabindex="1" formControlName="noteTitle" id="noteTitle" name="noteTitle" type="text" class="form-control"
+                        placeholder="Title" [ngClass]="{
+                                            'form-control': true,
+                                            'invalid': noteEntryForm.controls.noteTitle.invalid && noteEntryForm.controls.noteTitle.dirty,
+                                            'valid': noteEntryForm.controls.noteTitle.valid && noteEntryForm.controls.noteTitle.dirty}
+                                            " />
+
+                    <div *ngIf="noteEntryForm.controls.noteTitle.invalid && (noteEntryForm.controls.noteTitle.dirty || noteEntryForm.controls.noteTitle.touched)"
+                        class="error-list">
+                        <span class="error-list__item" *ngIf="noteEntryForm.controls.noteTitle.errors.required">
+                            <small>The note title is required</small>
+                        </span>
+                        <span class="error-list__item" *ngIf="noteEntryForm.controls.noteTitle.errors.pattern">
+                            <small>The note title is not in the correct format</small>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label required" for="noteDescription"> Description
+                        <sup class="asterix">*</sup>
+                    </label>
+                    <textarea tabindex="2" formControlName="noteDescription" name="noteDescription" id="noteDescription" rows="5" [ngClass]="{
+                                            'form-control': true,
+                                            'invalid': noteEntryForm.controls.noteDescription.invalid && noteEntryForm.controls.noteDescription.dirty,
+                                            'valid': noteEntryForm.controls.noteDescription.valid && noteEntryForm.controls.noteDescription.dirty}
+                                            "></textarea>
+
+                    <div *ngIf="noteEntryForm.controls.noteDescription.invalid && (noteEntryForm.controls.noteDescription.dirty || noteEntryForm.controls.noteDescription.touched)"
+                        class="error-list">
+                        <span class="error-list__item" *ngIf="noteEntryForm.controls.noteDescription.errors.required">
+                            <small>Your note is required</small>
+                        </span>
+                        <span class="error-list__item" *ngIf="noteEntryForm.controls.noteDescription.errors.pattern">
+                            <small>The note is not in a valid format</small>
+                        </span>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <button class="btn btn-default btn-sm" (click)="CancelAddNote()">Cancel</button>
+                        </div>
+                        <div class="col-xs-6 text-right">
+                            <button class="btn btn-default btn-sm btn-brand" (click)="AddNote()">Add new note</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</section>

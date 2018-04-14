@@ -1,0 +1,79 @@
+<section *ngIf="noteObj">
+        <header>
+            <h3>{{ this.noteObj.Title }}</h3>
+            <h5>{{ this.noteObj.Description }}</h5>
+            <p>
+                <a href="#" (click)="NavgigateToNotes()" title="Back to notes">Back to notes</a>
+            </p>
+        </header>
+    
+        <div class="row">
+            <div class="col-xs-12">
+                <form class="form" [formGroup]="commentEntryForm" novalidate autocomplete="false">
+    
+                    <div class="form-group" *ngIf="showCommentForm">
+                        <label class="control-label required" for="comment"> Write comment
+                            <sup class="asterix">*</sup>
+                        </label>
+                        <textarea tabindex="2" formControlName="comment" name="comment" id="comment" rows="5" [ngClass]="{
+                        'form-control': true,
+                        'invalid': commentEntryForm.controls.comment.invalid && commentEntryForm.controls.comment.dirty,
+                        'valid': commentEntryForm.controls.comment.valid && commentEntryForm.controls.comment.dirty}
+                        "></textarea>
+    
+                        <div *ngIf="commentEntryForm.controls.comment.invalid && (commentEntryForm.controls.comment.dirty || commentEntryForm.controls.comment.touched)"
+                            class="error-list">
+                            <span class="error-list__item" *ngIf="commentEntryForm.controls.comment.errors.required">
+                                <small>Your comment is required</small>
+                            </span>
+                            <span class="error-list__item" *ngIf="commentEntryForm.controls.comment.errors.pattern">
+                                <small>The comment is not in a valid format</small>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <button *ngIf="showCommentForm" class="btn btn-default btn-sm" (click)="CancelAddComment()">Cancel</button>
+                            </div>
+                            <div *ngIf="!showCommentForm" class="col-xs-6 text-right">
+                                <button class="btn btn-default btn-sm btn-brand" (click)="ToggleShowCommentForm()">Add new comment</button>
+                            </div>
+                            <div *ngIf="showCommentForm" class="col-xs-6 text-right">
+                                <button class="btn btn-default btn-sm btn-brand" (click)="AddComment()">Add comment</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    
+        <hr />
+    
+        <header>
+            <h3>Comments</h3>
+        </header>
+        <div class="row" *ngIf="commentsCollection">
+            <div class="col-xs-12" *ngIf="(commentsCollection.length < 1)">
+                <p>There are currently no comments for this note.</p>
+            </div>
+            <div class="col-xs-12">
+                <ul class="list-unstyled comments">
+                    <li class="comments__item" *ngFor="let comment of commentsCollection; let i = index;">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                {{ this._dataService.GetUserById(comment.OwnerId).Firstname + ' ' + this._dataService.GetUserById(comment.OwnerId).Surname }}
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                {{ (comment.PostDate | formatAsUKDate) + ", @" + (comment.PostDate | formatAs24HourTime) }}
+                            </div>
+                            <div class="col-xs-12">
+                                {{ comment.Comment }}
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    
+    </section>
