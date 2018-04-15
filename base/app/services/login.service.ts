@@ -6,12 +6,13 @@ import { StateProviderActions } from './../entities/data.entity';
 import { UserActions } from './../state/state.actions';
 import { StateProviderService } from './stateprovider.service'
 import { DataService } from './../services/data.service';
+import { UserService } from './user.service';
 import { Cookie } from 'ng2-cookies';
 
 import { createStore } from 'redux';
 import { RootReducer } from '../state/state.store';
 import { NgRedux } from 'ng2-redux';
-import { environment } from "../../environments/environment"; 
+import { environment } from "../../environments/environment";
 import { Subject } from 'rxjs/Subject';
 
 
@@ -30,6 +31,7 @@ export class LoginService {
         private _store: NgRedux<any>,
         private _stateProviderService: StateProviderService,
         private _dataService: DataService,
+        private _userService: UserService,
         private _http: Http
     ) {
     }
@@ -38,7 +40,7 @@ export class LoginService {
 
         this.headers = new Headers();
         this.headers.append('Content-Type', 'application/json');
-        
+
         let params = new URLSearchParams();
         params.set('Email', username.toString());
         params.set('Password', password.toString());
@@ -48,7 +50,7 @@ export class LoginService {
             headers: this.headers
         };
 
-        return this._http.get(this.credentialsTable, requestOptionsArgs).map((response) => response.json())
+        this._userService.GetDefaultInfo(this.credentialsTable, requestOptionsArgs)
             .subscribe((userCredentials: Array<IUserCredentials>) => {
 
                 let userCreds = userCredentials[0];
@@ -59,7 +61,8 @@ export class LoginService {
                     console.log("User not found");
                     (<any>window).alert("User not found");
                 }
-            });
+            }
+        );
     }
 
     public LogInByUserId(userId: number) {
@@ -77,11 +80,11 @@ export class LoginService {
             headers: this.headers
         };
 
-        this._http.get(url, requestOptionsArgs).map((response) => response.json())
+        this._userService.GetDefaultInfo(this.credentialsTable, requestOptionsArgs)
             .subscribe((user: Array<IUser>) => {
 
                 if (user.length) {
-                    this.currentUser = user[0]; 
+                    this.currentUser = user[0];
                     this._stateProviderService.ManageUserInState(StateProviderActions.Save, this.currentUser);
                     this.userIsLoggedIn.next(true);
                     this._router.navigateByUrl('/');
@@ -91,8 +94,8 @@ export class LoginService {
                     (<any>window).alert("User details not found");
                     //throw new Error("Sorry no such user was found");
                 }
-            });
-
+            }
+            );
     }
 
     public LogOut() {
@@ -102,7 +105,7 @@ export class LoginService {
     }
 
     public CheckLogin() {
-        if (!this.UserIsLoggedIn()){
+        if (!this.UserIsLoggedIn()) {
             this._router.navigateByUrl('/login');
         }
     }

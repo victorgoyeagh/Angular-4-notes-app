@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, RequestOptionsArgs, Response } from '@angular/http';
 import { INote } from './../entities/notes.entity';
 import { IUser } from './../entities/user.entity'; 
 import { IComment } from './../entities/comment.entity'; 
-import { environment } from "../../environments/environment";
-import { Response } from '@angular/http/src/static_response';
+import { environment } from "../../environments/environment"; 
 
 @Injectable()
 export class UserService {
@@ -14,6 +13,10 @@ export class UserService {
         private _http: Http 
     ) {
         this.usersTableUrl = environment.configurations.api.urls.usersTable;
+    }
+
+    GetDefaultInfo(credentialsTable:string, requestOptionsArgs?: RequestOptionsArgs){
+       return this._http.get(credentialsTable, requestOptionsArgs).map((response) => response.json());
     }
 
     GetUsersById(usersIds: Array<number>){
