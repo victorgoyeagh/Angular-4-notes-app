@@ -4,7 +4,7 @@ import { NotesComponent } from './../components/notes/notes.component';
 import { LoginService } from 'app/services/login.service';
 
 @Component({
-    selector: 'c-dashboard',
+    selector: 'dashboard',
     templateUrl: './templates/home.template.html'
 })
 
@@ -12,8 +12,7 @@ export class DashboardPage implements OnInit {
     
     constructor(
         private _loginService: LoginService
-    ) {
-       // this._loginService.CheckLogin();
+    ) { 
     }
 
     ngOnInit() {

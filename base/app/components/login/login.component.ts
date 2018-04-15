@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { FormValidator } from './../../helpers/FormValidatorUtil';
 import { LoginService } from './../../services/login.service';
-import { ModalInfo, ModalCommand, ModalFormType, ModalLocation, ModalType } from './../../entities/modal.entity';
-import { CommunicationService } from './../../services/communication.service';
 
 @Component({
     selector: 'c-login',
@@ -25,9 +23,12 @@ export class LoginComponent {
     });
 
     constructor(
-        private _loginService: LoginService,
-        private _communicationService: CommunicationService
+        private _loginService: LoginService
     ){
+    }
+
+    UserIsLoggedIn(){
+        return this._loginService.UserIsLoggedIn();
     }
 
     SubmitLoginDetails(){
@@ -45,28 +46,6 @@ export class LoginComponent {
             this._loginService.FindUser(username, password);
         }
     }
-
     
-    LaunchModal() {
-        let modalInfo: ModalInfo = new ModalInfo(
-            `<h3>Modal</h3>`,
-            ``,
-            ModalCommand.Open,
-            ModalType.Alert,
-            "OK",
-            "",
-            null,
-            ModalFormType.Default,
-            "defaultModal",
-            {
-                Width: 400,
-                Height: 400
-            },
-            ModalLocation.Center
-        );
-
-        this._communicationService.ShareModalInfoData(modalInfo);
-        return false;
-    }
 
 }

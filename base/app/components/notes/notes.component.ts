@@ -4,15 +4,11 @@ import { Route, Router, NavigationExtras } from '@angular/router';
 import { INote } from './../../entities/notes.entity';
 import { IUser } from './../../entities/user.entity';
 import { StateProviderActions } from './../../entities/data.entity';
+import { StateProviderService } from 'app/services/stateprovider.service';
 import { FormatAsUKDatePipe, FormatAs24HourTimePipe } from './../../pipes/fomatdate.pipe';
 import { NumberUtil } from './../../helpers/NumberUtil';
-import { DateUtil } from './../../helpers/DateUtil';
-import { CommunicationService } from './../../services/communication.service'; 
 import { UserService } from './../../services/user.service';
-import { StateProviderService } from 'app/services/stateprovider.service';
 import { NotesService } from 'app/services/notes.service';
-import { forEach } from '@angular/router/src/utils/collection';
-import { UserActions } from 'app/state/state.actions';
 import { environment } from './../../../environments/environment';
 
 @Component({
@@ -23,7 +19,6 @@ import { environment } from './../../../environments/environment';
 export class NotesComponent implements OnInit {
     private currentUser: IUser;
     private usersTableUrl: string = environment.configurations.api.urls.usersTable;
-    public DateUtil = DateUtil;
     public noteCollection: Array<INote>;
     public noteOwners: Array<IUser>;
     private showNoteForm: boolean = false;
@@ -43,10 +38,14 @@ export class NotesComponent implements OnInit {
     constructor(
         private _notesService: NotesService,
         private _userService: UserService,
-        private _router: Router,
-        private _stateProviderService: StateProviderService, 
-        private _communicationService: CommunicationService
+        private _router: Router, 
+        private _stateProviderService: StateProviderService
     ) { 
+
+    }
+
+    GoToLoginPage(){
+        this._router.navigate(['login']);
     }
 
     ngOnInit() {
@@ -68,7 +67,6 @@ export class NotesComponent implements OnInit {
                         })[0];
                         this.noteCollection.push(note);
                     });
-
                 });
             }
         });

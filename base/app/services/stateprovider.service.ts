@@ -21,23 +21,30 @@ export class StateProviderService {
     ManageUserInState(action?: StateProviderActions, user?: IUser) {
         let retreivedUser: IUser = null;
         switch (this.stateProvider) {
+            //redux
             case StateProviders.ReduxStore:
                 if(action == StateProviderActions.Retrieve){ 
                     retreivedUser = this._store.getState().user.CurrentUser;
-                } else {
+                } else if(action == StateProviderActions.Save) {
                     this._store.dispatch({
-                        type: (action == StateProviderActions.Remove) ? UserActions.USER_REMOVE : UserActions.USER_SET,
+                        type: UserActions.USER_SET,
                         payload: [user]
+                    });
+                } else if(action == StateProviderActions.Remove) {
+                    this._store.dispatch({
+                        type: UserActions.USER_REMOVE
                     });
                 }
             break;
+            //cookies
             case  StateProviders.Cookies:
+
                 if(action == StateProviderActions.Retrieve) {
                     retreivedUser = JSON.parse(Cookie.get(this.cookieUserStr));
                 } else {
                     if(action == StateProviderActions.Remove) {
                         Cookie.delete(this.cookieUserStr) 
-                    } else { 
+                    } else if(action == StateProviderActions.Save) { 
                         Cookie.set(this.cookieUserStr, JSON.stringify(user), this.cookieLifeSpan);
                     }
                 }

@@ -1,6 +1,9 @@
-<nav>
+<nav *ngIf="this.userIsLoggedIn">
     <ul class="list-unstyled list-inline">
-        <li *ngIf="this.userIsLoggedIn">
+        <li>
+            <a (click)="LaunchModal()" href="#" title="launch modal">Modal</a>
+        </li>
+        <li>
             <a href="#" (click)="this.LogOutUser()">Logout</a>
         </li>
     </ul>

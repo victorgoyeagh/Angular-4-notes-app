@@ -33,7 +33,6 @@ export class CommentComponent implements OnInit {
         private _router: Router,
         private _loginService: LoginService
     ) {
-        this._loginService.CheckLogin();
     }
 
     ngOnInit() {

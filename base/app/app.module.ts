@@ -32,6 +32,7 @@ import { FooterComponent } from './components/shared/footer.component';
 import { HeaderComponent } from './components/shared/header.component';
 import { NavigationComponent } from './components/shared/navigation.component';
 import { ModalOverlayComponent } from './components/modal/modal.component';
+import { NotesComponent } from './components/notes/notes.component';
 
 /* services */
 import { CommunicationService } from './services/communication.service';
@@ -56,7 +57,8 @@ import { DataService } from './services/data.service';
         LoginPage,
         LoginComponent,
         CommentComponent,
-        ModalOverlayComponent
+        ModalOverlayComponent,
+        NotesComponent
     ],
     exports: [
     ],

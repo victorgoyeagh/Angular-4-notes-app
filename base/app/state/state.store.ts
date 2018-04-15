@@ -11,11 +11,7 @@ export interface INotesReducer {
     Notes: Array<INote>
 }
 
-export interface ILoggedInUser {
-    CurrentUser: IUser
-}
-
-export interface ILoggedInUser {
+export interface IUserReducer {
     CurrentUser: IUser
 }
 
@@ -23,16 +19,16 @@ export interface ICommentsReducer {
     Comments: Array<IComment>
 }
 
-let lsNotes = (localStorage.getItem("notes") ? <Array<INote>>JSON.parse(localStorage.getItem("notes")) : undefined);
-let dbNotes = (lsNotes) ? lsNotes : initNotes;
+//let lsNotes = (localStorage.getItem("notes") ? <Array<INote>>JSON.parse(localStorage.getItem("notes")) : undefined);
+//let dbNotes = (lsNotes) ? lsNotes : initNotes;
 export const notesReducerInitState = {
-    Notes: dbNotes
+    Notes: undefined
 }
 
-let lsComments = (localStorage.getItem("comments") ? <Array<IComment>>JSON.parse(localStorage.getItem("comments")) : undefined);
-let dbComments = (lsComments) ? lsComments : initComments;
+//let lsComments = (localStorage.getItem("comments") ? <Array<IComment>>JSON.parse(localStorage.getItem("comments")) : undefined);
+//let dbComments = (lsComments) ? lsComments : initComments;
 export const commentsReducerInitState = {
-    Comments: dbComments
+    Comments: undefined
 }
 
 export const userReducerInitState = {
@@ -71,7 +67,7 @@ export function notesReducer(state: INotesReducer = notesReducerInitState, actio
     }
 }
 
-export function userReducer(state: ILoggedInUser = userReducerInitState, action) {
+export function userReducer(state: IUserReducer = userReducerInitState, action) {
     switch (action.type) {
         case UserActions.USER_SET:
             return {

@@ -11,7 +11,8 @@ import { Cookie } from 'ng2-cookies';
 import { createStore } from 'redux';
 import { RootReducer } from '../state/state.store';
 import { NgRedux } from 'ng2-redux';
-import { environment } from "../../environments/environment";
+import { environment } from "../../environments/environment"; 
+import { Subject } from 'rxjs/Subject';
 
 
 @Injectable()
@@ -22,19 +23,22 @@ export class LoginService {
 
     private userId: number = undefined;
     private currentUser: IUser;
+    public userIsLoggedIn: Subject<any> = new Subject<any>()
 
     constructor(
         private _router: Router,
+        private _store: NgRedux<any>,
         private _stateProviderService: StateProviderService,
         private _dataService: DataService,
         private _http: Http
     ) {
-        this.headers = new Headers();
-        this.headers.append('Content-Type', 'application/json')
     }
 
     public FindUser(username, password) {
 
+        this.headers = new Headers();
+        this.headers.append('Content-Type', 'application/json');
+        
         let params = new URLSearchParams();
         params.set('Email', username.toString());
         params.set('Password', password.toString());
@@ -50,7 +54,7 @@ export class LoginService {
                 let userCreds = userCredentials[0];
                 if (userCreds) {
                     this.userId = userCreds.Id;
-                    this.LogInByUserId(userCreds.Id);
+                    this.LogInByUserId(userCreds.UserId);
                 } else {
                     console.log("User not found");
                     (<any>window).alert("User not found");
@@ -64,6 +68,7 @@ export class LoginService {
             return;
         }
 
+        let url = this.usersTableUrl; //+"?Id="+userId;
         let params = new URLSearchParams();
         params.set('UserId', userId.toString());
 
@@ -72,13 +77,14 @@ export class LoginService {
             headers: this.headers
         };
 
-        this._http.get(this.usersTableUrl, requestOptionsArgs).map((response) => response.json())
-            .subscribe((user: IUser) => {
+        this._http.get(url, requestOptionsArgs).map((response) => response.json())
+            .subscribe((user: Array<IUser>) => {
 
-                if (user) {
-                    this.currentUser = user;
+                if (user.length) {
+                    this.currentUser = user[0]; 
                     this._stateProviderService.ManageUserInState(StateProviderActions.Save, this.currentUser);
-                    this._router.navigate(['/']);
+                    this.userIsLoggedIn.next(true);
+                    this._router.navigateByUrl('/');
                 }
                 else {
                     console.log("User details not found");
@@ -86,16 +92,19 @@ export class LoginService {
                     //throw new Error("Sorry no such user was found");
                 }
             });
+
     }
 
     public LogOut() {
         this._stateProviderService.ManageUserInState(StateProviderActions.Remove, this.currentUser);
-        this._router.navigate(['/login']);
+        this.userIsLoggedIn.next(false);
+        this._router.navigateByUrl('/login');
     }
 
     public CheckLogin() {
-        if (!this.UserIsLoggedIn())
-            this._router.navigate(['/login']);
+        if (!this.UserIsLoggedIn()){
+            this._router.navigateByUrl('/login');
+        }
     }
 
     public UserIsLoggedIn() {
