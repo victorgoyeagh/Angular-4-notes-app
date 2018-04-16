@@ -1,4 +1,4 @@
-# notes app
+# notes app (another boilerplate)
 Angular 4 / Typescript / RxJs / Redux / SASS / HTML5 / Grunt
 
 via bash or terminal...
