@@ -26,15 +26,17 @@ import { PageNotFoundComponent } from './views/pagenotfound.view';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './views/home.view';
 import { MainComponent } from './views/main.view';
-import { CommentComponent } from './views/comments.view';
+import { CommentPage } from './views/comments.view';
 import { BaseComponent } from './base.component';
 import { FooterComponent } from './components/shared/footer.component';
 import { HeaderComponent } from './components/shared/header.component';
 import { NavigationComponent } from './components/shared/navigation.component';
 import { ModalOverlayComponent } from './components/modal/modal.component';
 import { NotesComponent } from './components/notes/notes.component';
+import { CommentsComponent } from './components/comments/comments.component';
 
 /* services */
+import { CommentsService } from './services/comments.service';
 import { CommunicationService } from './services/communication.service';
 import { LoginService } from './services/login.service';
 import { StateProviderService } from './services/stateprovider.service';
@@ -56,9 +58,10 @@ import { DataService } from './services/data.service';
         MainComponent,
         LoginPage,
         LoginComponent,
-        CommentComponent,
+        CommentPage,
         ModalOverlayComponent,
-        NotesComponent
+        NotesComponent,
+        CommentsComponent
     ],
     exports: [
     ],
@@ -79,6 +82,7 @@ import { DataService } from './services/data.service';
         DataProviderService,
         NotesService,
         UserService,
+        CommentsService,
         DataService
     ],
     bootstrap:  [

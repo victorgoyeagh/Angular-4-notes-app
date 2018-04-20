@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { LoginService } from './../../services/login.service';
 import { CommunicationService } from './../../services/communication.service';
 import { ModalInfo, ModalCommand, ModalFormType, ModalLocation, ModalType } from './../../entities/modal.entity';
@@ -13,7 +14,8 @@ export class NavigationComponent {
 
     constructor(
         private _loginService: LoginService,
-        private _communicationService: CommunicationService
+        private _communicationService: CommunicationService,
+        private _router: Router
     ){  
         this._loginService.userIsLoggedIn.subscribe((value: boolean) => {
             this.userIsLoggedIn = value;
@@ -22,6 +24,10 @@ export class NavigationComponent {
 
     LogOutUser(){
         this._loginService.LogOut();
+    }
+
+    NavigateTo(pageName: string){
+        this._router.navigateByUrl(pageName);
     }
     
     LaunchModal() {

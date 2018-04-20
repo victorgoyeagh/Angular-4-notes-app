@@ -1,25 +1,27 @@
 import { Component, OnInit } from '@angular/core';
-import { Route, Router } from '@angular/router'; 
+import { Route, Router } from '@angular/router';
 import { FormatAsUKDatePipe, FormatAs24HourTimePipe } from './../../pipes/fomatdate.pipe';
 import { IUser } from './../../entities/user.entity';
 import { INote } from './../../entities/notes.entity';
 import { IComment } from './../../entities/comment.entity';
 import { NumberUtil } from './../../helpers/NumberUtil';
-import { DataService } from 'app/services/data.service';
+import { CommentsService } from './../../services/comments.service';
+import { NotesService } from './../../services/notes.service';
 import { CommunicationService } from './../../services/communication.service';
 import { FormControl, FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { NgRedux } from 'ng2-redux';
 
 @Component({
     selector: 'c-comments',
     templateUrl: './templates/comments.template.html'
 })
 
-export class CommentsComponent implements OnInit { 
+export class CommentsComponent implements OnInit {
     private noteId: number;
+    private requestedNote: INote;
     public showCommentForm: boolean = false;
-    public commentsCollection: Array<IComment> = Array<IComment>();
+    public commentsCollection: Array<IComment>;
     private textRestrictRegex = new RegExp("^[0-9,a-z,A-Z ,.'-]+$");
-    public noteObj: INote;
     private commentEntryForm = new FormGroup({
         comment: new FormControl("", [
             Validators.required,
@@ -28,18 +30,29 @@ export class CommentsComponent implements OnInit {
     });
 
     constructor(
-        public _dataService: DataService,
+        public _store: NgRedux<any>,
+        public _commentsService: CommentsService,
+        private _notesService: NotesService,
         private _router: Router
-    ) { 
-    }
+    ) {
 
-    ngOnInit() {
         let path = window.location.href,
             query = path.substring(path.indexOf("?"));
 
         this.noteId = parseInt(query.replace("?NoteId=", ""));
-        this.noteObj = this._dataService.GetNoteById(this.noteId);
-        this.commentsCollection = <Array<IComment>>this._dataService.GetCommentsById(this.noteId);
+        this._commentsService.GetCommentsByNoteId(this.noteId).subscribe((response: Array<IComment>) => {
+            let fetchedNotes = response;
+            this.commentsCollection = fetchedNotes;
+        });
+
+        this._notesService.GetNoteById(this.noteId).subscribe((response: INote) => {
+            let fetchedNote = response;
+            this.requestedNote = fetchedNote;
+        });
+    }
+
+    ngOnInit() {
+        
     }
 
     AddComment() {
@@ -47,13 +60,14 @@ export class CommentsComponent implements OnInit {
             _self = this;
 
         if (!formIsValid) {
+
             for (let i in this.commentEntryForm.controls) {
                 this.commentEntryForm.controls[i].markAsTouched();
             }
         } else {
-            let controls = this.commentEntryForm.controls,
-                user = this._dataService.GetCurrentUserDetails();
-            console.log(controls);
+
+            let controls = this.commentEntryForm.controls;
+            let user = <IUser>this._store.getState().user.CurrentUser;
 
             let newComment = <IComment>{
                 Id: NumberUtil.GetRandomNumber(),
@@ -61,10 +75,10 @@ export class CommentsComponent implements OnInit {
                 OwnerId: user.Id,
                 Comment: controls.comment.value,
                 PostDate: Date.now()
-            }
+            };
 
-            this._dataService.SaveCommentData(newComment);
-            this.commentsCollection = <Array<IComment>>this._dataService.GetCommentsById(this.noteId);
+            this._commentsService.AddComment(newComment);
+            this.commentsCollection.push(newComment);
             this.CancelAddComment();
         }
     }

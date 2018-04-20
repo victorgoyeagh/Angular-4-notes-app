@@ -18,4 +18,8 @@ export class NotesService {
         return this._http.get(this.notesUrl).map((response)=>response.json())
     }
 
+    GetNoteById(noteId: number) {
+		console.log(this.notesUrl + "?Id=" + noteId);
+        return this._http.get(this.notesUrl + "?Id=" + noteId).map((commentResponse) => commentResponse.json());
+    }
 }

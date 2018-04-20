@@ -1,6 +1,9 @@
 <nav *ngIf="this.userIsLoggedIn">
     <ul class="list-unstyled list-inline">
         <li>
+            <a href="#" (click)="this.NavigateTo('/home')" title="Home page">Home</a>
+        </li>
+        <li>
             <a (click)="LaunchModal()" href="#" title="launch modal">Modal</a>
         </li>
         <li>

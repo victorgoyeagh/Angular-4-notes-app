@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { LoginService } from './../services/login.service';
 
 @Component({
     selector: 'pagenotfound',
@@ -7,7 +8,9 @@ import { Component } from '@angular/core';
 
 export class PageNotFoundComponent {
 
-    constructor(){
-
+    constructor(
+        private _loginService: LoginService
+    ){
+        this._loginService.CheckLogin();
     }
 }

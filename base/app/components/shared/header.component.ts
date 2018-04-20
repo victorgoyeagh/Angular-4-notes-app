@@ -13,8 +13,6 @@ export class HeaderComponent implements OnInit {
     constructor(
         private _sanitizer: DomSanitizer,
     ) {
-        let _self = this;
-     
     }
 
     ngOnInit() {
