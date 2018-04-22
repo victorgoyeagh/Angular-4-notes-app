@@ -1,14 +1,15 @@
 import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule, RouterLinkActive } from '@angular/router';
-import { HomeComponent } from '../views/home.view';
+import { HomePage } from '../views/home.view';
 import { LoginPage } from '../views/login.view';
-import { CommentsComponent } from '../components/comments/comments.component';
-import { PageNotFoundComponent } from './../views/pagenotfound.view';
+import { DashboardPage } from '../views/dashboard.view';
+import { CommentPage } from './../views/comments.view';
+import { PageNotFoundPage } from './../views/pagenotfound.view';
 
 const appRoutes: Routes = [
     {
         path: '',
-        component: HomeComponent,
+        component: DashboardPage,
         pathMatch: 'full'
     },
     {
@@ -17,18 +18,23 @@ const appRoutes: Routes = [
         pathMatch: 'full'
     },
     {
+        path: 'dashboard',
+        component: DashboardPage,
+        pathMatch: 'full'
+    },
+    {
         path: 'home',
-        component: HomeComponent,
+        component: HomePage,
         pathMatch: 'full'
     },
     {
         path: 'comments',
-        component: CommentsComponent,
+        component: CommentPage,
         pathMatch: 'full'
     },
     {
         path: '**',
-        component: PageNotFoundComponent
+        component: PageNotFoundPage
     }
 ];
 

@@ -27,12 +27,12 @@ export class CommentsService {
 
 	GetCommentsByNoteId(noteId: number) {
 		return this._http.get(this.commentUrl + "?Id=" + noteId).map((commentResponse) => commentResponse.json());
-		
-		/*return this._http.get(this.notesUrl + "?Id=" + noteId).map((commentResponse) => {
-			
-			let comment = commentResponse.json();	
+
+		 /*this._http.get(this.userUrl + "?Id=" + noteId).map((commentResponse) => {
+
+			let comment = commentResponse.json();
 			return this._http.get(this.userUrl + "?Id=" + comment.OwnerId).map((userResponse) => {
-				
+
 				return Observable.of([
 					commentResponse,
 					userResponse

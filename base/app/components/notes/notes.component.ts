@@ -119,10 +119,8 @@ export class NotesComponent implements OnInit {
                 OwnerDetails: user
             };
 
-            //_self._dataService.SaveNotesData(newNote);
-            //this.noteCollection = this._dataService.GetNotesData();
-            //this.CancelAddNote();
+            this.noteCollection.push(newNote);
+            this.CancelAddNote();
         }
     }
-
 }

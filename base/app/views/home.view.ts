@@ -5,7 +5,7 @@ import { LoginService } from 'app/services/login.service';
     templateUrl: './templates/home.template.html'
 })
 
-export class HomeComponent {
+export class HomePage {
 
     constructor(
         private _loginService: LoginService

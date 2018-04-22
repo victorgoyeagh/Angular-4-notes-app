@@ -5,7 +5,6 @@ import { IUser, IUserCredentials } from './../entities/user.entity';
 import { StateProviderActions } from './../entities/data.entity';
 import { UserActions } from './../state/state.actions';
 import { StateProviderService } from './stateprovider.service'
-import { DataService } from './../services/data.service';
 import { UserService } from './user.service';
 import { Cookie } from 'ng2-cookies';
 
@@ -30,7 +29,6 @@ export class LoginService {
         private _router: Router,
         private _store: NgRedux<any>,
         private _stateProviderService: StateProviderService,
-        private _dataService: DataService,
         private _userService: UserService,
         private _http: Http
     ) {
@@ -87,7 +85,7 @@ export class LoginService {
                     this.currentUser = user[0];
                     this._stateProviderService.ManageUserInState(StateProviderActions.Save, this.currentUser);
                     this.userIsLoggedIn.next(true);
-                    this._router.navigateByUrl('/');
+                    this._router.navigateByUrl('/dashboard');
                 }
                 else {
                     console.log("User details not found");
@@ -95,7 +93,7 @@ export class LoginService {
                     //throw new Error("Sorry no such user was found");
                 }
             }
-            );
+        );
     }
 
     public LogOut() {

@@ -3,30 +3,14 @@ import { UserActions, NoteActions, UserCollectionActions, CommentActions } from 
 import { IUser, IUserCredentials } from './../entities/user.entity';
 import { INote } from './../entities/notes.entity';
 import { IComment } from './../entities/comment.entity';
-import { initUsers, initNotes, initComments } from './data';
+import { ICommentsReducer, IUserReducer, INotesReducer } from './../entities/store.entity';
 
 /*** init states ***/
 
-export interface INotesReducer {
-    Notes: Array<INote>
-}
-
-export interface IUserReducer {
-    CurrentUser: IUser
-}
-
-export interface ICommentsReducer {
-    Comments: Array<IComment>
-}
-
-//let lsNotes = (localStorage.getItem("notes") ? <Array<INote>>JSON.parse(localStorage.getItem("notes")) : undefined);
-//let dbNotes = (lsNotes) ? lsNotes : initNotes;
 export const notesReducerInitState = {
     Notes: undefined
 }
 
-//let lsComments = (localStorage.getItem("comments") ? <Array<IComment>>JSON.parse(localStorage.getItem("comments")) : undefined);
-//let dbComments = (lsComments) ? lsComments : initComments;
 export const commentsReducerInitState = {
     Comments: undefined
 }
@@ -35,6 +19,7 @@ export const userReducerInitState = {
     CurrentUser: undefined
 }
 
+/*** init states ***/
 export const appInitialState = {
     notesReducerInitState,
     userReducerInitState,

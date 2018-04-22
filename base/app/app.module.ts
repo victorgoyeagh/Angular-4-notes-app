@@ -18,16 +18,17 @@ import { SortByPipe } from './pipes/sort.pipe';
 import { FilterPipe } from './pipes/filter.pipe';
 
 /* views */
+import { HomePage } from './views/home.view';
 import { LoginPage } from './views/login.view';
+import { CommentPage } from './views/comments.view';
+import { PageNotFoundPage } from './views/pagenotfound.view';
+import { DashboardPage } from "./views/dashboard.view";
 
 /* components */
 import { Routing } from './routers/routing.route';
-import { PageNotFoundComponent } from './views/pagenotfound.view';
 import { LoginComponent } from './components/login/login.component';
-import { HomeComponent } from './views/home.view';
-import { MainComponent } from './views/main.view';
-import { CommentPage } from './views/comments.view';
 import { BaseComponent } from './base.component';
+import { MainComponent } from './views/main.view';
 import { FooterComponent } from './components/shared/footer.component';
 import { HeaderComponent } from './components/shared/header.component';
 import { NavigationComponent } from './components/shared/navigation.component';
@@ -43,22 +44,22 @@ import { StateProviderService } from './services/stateprovider.service';
 import { DataProviderService } from './services/dataprovider.service';
 import { NotesService } from './services/notes.service';
 import { UserService } from './services/user.service';
-import { DataService } from './services/data.service';
 
 @NgModule({
     declarations: [
-        PageNotFoundComponent,
+        HomePage,
+        PageNotFoundPage,
+        CommentPage,
+        LoginPage,
+        DashboardPage,
         FormatAsUKDatePipe,
         FormatAs24HourTimePipe,
         BaseComponent,
-        HomeComponent,
         HeaderComponent,
         FooterComponent,
         NavigationComponent,
         MainComponent,
-        LoginPage,
         LoginComponent,
-        CommentPage,
         ModalOverlayComponent,
         NotesComponent,
         CommentsComponent
@@ -82,8 +83,7 @@ import { DataService } from './services/data.service';
         DataProviderService,
         NotesService,
         UserService,
-        CommentsService,
-        DataService
+        CommentsService
     ],
     bootstrap:  [
         BaseComponent

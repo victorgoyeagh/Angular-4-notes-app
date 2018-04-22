@@ -84,7 +84,7 @@ export class CommentsComponent implements OnInit {
     }
 
     NavgigateToNotes() {
-        this._router.navigate(["home"]);
+        this._router.navigate(["dashboard"]);
     }
 
     CancelAddComment() {

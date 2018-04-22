@@ -6,7 +6,7 @@ import { LoginService } from './../services/login.service';
     templateUrl: './templates/pagenotfound.template.html'
 })
 
-export class PageNotFoundComponent {
+export class PageNotFoundPage {
 
     constructor(
         private _loginService: LoginService
