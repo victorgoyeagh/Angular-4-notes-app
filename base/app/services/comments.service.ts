@@ -9,35 +9,43 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class CommentsService {
-	private commentUrl: string;
-	private userUrl: string;
-	private notesUrl: string;
+    private commentUrl: string;
+    private userUrl: string;
+    private notesUrl: string;
 
-	constructor(
-		private _http: Http
-	) {
-		this.userUrl = environment.configurations.api.urls.usersTable;
-		this.commentUrl = environment.configurations.api.urls.notesTable;
-	}
+    constructor(
+        private _http: Http
+    ) {
+        this.userUrl = environment.configurations.api.urls.usersTable;
+        this.commentUrl = environment.configurations.api.urls.commentsTable;
+    }
 
-	AddComment(comment: IComment) {
+    AddComment(comment: IComment) {
 
-		//TODO: save comment
-	}
+        //TODO: save comment
+    }
 
-	GetCommentsByNoteId(noteId: number) {
-		return this._http.get(this.commentUrl + "?Id=" + noteId).map((commentResponse) => commentResponse.json());
+    GetCommentsByNoteId(noteId: number) {
+        return this._http.get(this.commentUrl + "?NoteId=" + noteId).switchMap((comments) => {
 
-		 /*this._http.get(this.userUrl + "?Id=" + noteId).map((commentResponse) => {
+            let ownerIds = comments.json().map((comment: IComment) => {
+                return "id=" + comment.OwnerId;
+            });
 
-			let comment = commentResponse.json();
-			return this._http.get(this.userUrl + "?Id=" + comment.OwnerId).map((userResponse) => {
+            return this._http.get(this.userUrl + "?" + ownerIds.join("&")).map((users) => {
+                let newCollection = new Array<IComment>(),
+                    colUsers = users.json();
 
-				return Observable.of([
-					commentResponse,
-					userResponse
-				]);
-			});
-		});*/
-	}
+                comments.json().forEach((comment: IComment) => {
+                    comment.OwnerDetails = colUsers.filter((user: IUser) => {
+                        if (comment.OwnerId === user.Id)
+                            return comment.OwnerId == user.Id
+                    })[0];
+                    newCollection.push(comment);
+                });
+
+                return newCollection;
+            });
+        });
+    }
 }

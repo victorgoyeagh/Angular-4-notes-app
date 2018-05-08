@@ -59,26 +59,38 @@
     <header>
         <h3>Comments</h3>
     </header>
-    <div class="row" *ngIf="commentsCollection">
-        <div class="col-xs-12" *ngIf="(commentsCollection.length < 1)">
-            <p>There are currently no comments for this note.</p>
-        </div>
-        <div class="col-xs-12" *ngIf="(commentsCollection.length > 0)">
-            <ul class="list-unstyled comments">
-                <li class="comments__item" *ngFor="let comment of commentsCollection; let i = index;">
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <!--{{  }}-->
+    <div class="comments">
+        <div class="row" *ngIf="commentsCollection">
+            <div class="col-xs-12" *ngIf="(commentsCollection.length < 1)">
+                <p>There are currently no comments for this note.</p>
+            </div>
+            <div class="col-xs-12" *ngIf="(commentsCollection.length > 0)">
+                <ul class="list-unstyled comments">
+                    <li class="comments__item" *ngFor="let comment of commentsCollection; let i = index;">
+                        <div class="row">
+                            <div class="col-xs-8">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <div class="comments__item--image">
+                                            <img *ngIf="imagesFolder" [src]="imagesFolder + comment.OwnerDetails.ProfileImage" [alt]="comment.OwnerDetails.Firstname + ' ' + comment.OwnerDetails.Surname"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-9">
+                                        {{ comment.OwnerDetails.Firstname + " " + comment.OwnerDetails.Surname }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 text-right">
+                                {{ (comment.PostDate | formatAsUKDate) + ", @" + (comment.PostDate | formatAs24HourTime) }}
+                            </div>
+                            <div class="col-xs-12">
+                                {{ comment.Comment }}
+                            </div>
                         </div>
-                        <div class="col-xs-6 text-right">
-                            {{ (comment.PostDate | formatAsUKDate) + ", @" + (comment.PostDate | formatAs24HourTime) }}
-                        </div>
-                        <div class="col-xs-12">
-                            {{ comment.Comment }}
-                        </div>
-                    </div>
-                </li>
-            </ul>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </section>

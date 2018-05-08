@@ -27,6 +27,9 @@ export const environment = {
                 dataError: "Something went wrong fetching the data",
                 communicationError: "Could not communicate update"
             }
+        },
+        imagesFolder: {
+            users: "/assets/images/db_images/"
         }
     }
 }; 

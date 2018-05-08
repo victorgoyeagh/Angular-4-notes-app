@@ -50,25 +50,10 @@ export class NotesComponent implements OnInit {
 
     ngOnInit() {
         this.currentUser = <IUser>this._stateProviderService.ManageUserInState(StateProviderActions.Retrieve);
-        this.noteCollection = new Array<INote>();
 
         this._notesService.GetAllNotes().subscribe((allNotes: Array<INote>) => {
-
-            let ownerIds: Array<number>;
-            if (allNotes.length > 0) {
-                ownerIds = allNotes.map((item) => item.OwnerId);
-
-                this._userService.GetUsersById(ownerIds).subscribe((users: Array<IUser>) => {
-                    this.noteOwners = users;
-
-                    allNotes.forEach((note: INote) => {
-                        note.OwnerDetails = this.noteOwners.filter((noteOwner) => {
-                            return note.OwnerId == noteOwner.Id
-                        })[0];
-                        this.noteCollection.push(note);
-                    });
-                });
-            }
+            console.log(allNotes);
+            this.noteCollection = allNotes;
         });
     }
 

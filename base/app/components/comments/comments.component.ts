@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Route, Router } from '@angular/router';
 import { FormatAsUKDatePipe, FormatAs24HourTimePipe } from './../../pipes/fomatdate.pipe';
+import { FormControl, FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { IUser } from './../../entities/user.entity';
 import { INote } from './../../entities/notes.entity';
 import { IComment } from './../../entities/comment.entity';
@@ -8,7 +9,7 @@ import { NumberUtil } from './../../helpers/NumberUtil';
 import { CommentsService } from './../../services/comments.service';
 import { NotesService } from './../../services/notes.service';
 import { CommunicationService } from './../../services/communication.service';
-import { FormControl, FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { environment } from './../../../environments/environment';
 import { NgRedux } from 'ng2-redux';
 
 @Component({
@@ -18,6 +19,7 @@ import { NgRedux } from 'ng2-redux';
 
 export class CommentsComponent implements OnInit {
     private noteId: number;
+    private imagesFolder: string = environment.configurations.imagesFolder.users;
     private requestedNote: INote;
     public showCommentForm: boolean = false;
     public commentsCollection: Array<IComment>;
@@ -40,19 +42,21 @@ export class CommentsComponent implements OnInit {
             query = path.substring(path.indexOf("?"));
 
         this.noteId = parseInt(query.replace("?NoteId=", ""));
+    }
+
+    ngOnInit() {
+        
         this._commentsService.GetCommentsByNoteId(this.noteId).subscribe((response: Array<IComment>) => {
             let fetchedNotes = response;
             this.commentsCollection = fetchedNotes;
         });
 
-        this._notesService.GetNoteById(this.noteId).subscribe((response: INote) => {
+        this._notesService.GetNoteById(this.noteId).subscribe((response) => {
             let fetchedNote = response;
-            this.requestedNote = fetchedNote;
-        });
-    }
 
-    ngOnInit() {
-        
+            console.log(response);
+            //this.requestedNote = fetchedNote;
+        });
     }
 
     AddComment() {
