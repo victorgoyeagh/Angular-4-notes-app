@@ -66,26 +66,33 @@
             </div>
             <div class="col-xs-12" *ngIf="(commentsCollection.length > 0)">
                 <ul class="list-unstyled comments">
-                    <li class="comments__item" *ngFor="let comment of commentsCollection; let i = index;">
+                    <li class="comments--item" *ngFor="let comment of commentsCollection; let i = index;">
                         <div class="row">
-                            <div class="col-xs-8">
+                            <div class="col-xs-12">
                                 <div class="row">
-                                    <div class="col-xs-3">
-                                        <div class="comments__item--image">
+                                    <div class="col-xs-2">
+                                        <div class="comments--image">
                                             <img *ngIf="imagesFolder" [src]="imagesFolder + comment.OwnerDetails.ProfileImage" [alt]="comment.OwnerDetails.Firstname + ' ' + comment.OwnerDetails.Surname"
                                             />
                                         </div>
                                     </div>
-                                    <div class="col-xs-9">
-                                        {{ comment.OwnerDetails.Firstname + " " + comment.OwnerDetails.Surname }}
+                                    <div class="col-xs-10">
+                                        <div class="row">
+                                            <div class="col-xs-6 col-sm-6">
+                                                <p>{{ comment.OwnerDetails.Firstname + " " + comment.OwnerDetails.Surname }}</p>
+                                            </div>
+                                            <div class="col-xs-6 col-sm-6 text-right">
+                                                {{ (comment.PostDate | formatAsUKDate) + ", @" + (comment.PostDate | formatAs24HourTime) }}
+
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                {{ comment.Comment }}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-xs-4 text-right">
-                                {{ (comment.PostDate | formatAsUKDate) + ", @" + (comment.PostDate | formatAs24HourTime) }}
-                            </div>
-                            <div class="col-xs-12">
-                                {{ comment.Comment }}
                             </div>
                         </div>
                     </li>
