@@ -52,10 +52,9 @@ export class CommentsComponent implements OnInit {
         });
 
         this._notesService.GetNoteById(this.noteId).subscribe((response) => {
-            let fetchedNote = response;
-
+            let fetchedNote = response[0];
             console.log(response);
-            //this.requestedNote = fetchedNote;
+            this.requestedNote = fetchedNote;
         });
     }
 

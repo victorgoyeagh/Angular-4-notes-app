@@ -52,7 +52,6 @@ export class NotesComponent implements OnInit {
         this.currentUser = <IUser>this._stateProviderService.ManageUserInState(StateProviderActions.Retrieve);
 
         this._notesService.GetAllNotes().subscribe((allNotes: Array<INote>) => {
-            console.log(allNotes);
             this.noteCollection = allNotes;
         });
     }
