@@ -57,7 +57,6 @@ export class NotesComponent implements OnInit {
     }
 
     GetOwnerDetailsById(userId: number) {
-
     }
 
     NavigateToDetails(noteId: number) {

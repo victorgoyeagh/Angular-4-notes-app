@@ -51,9 +51,8 @@ export class CommentsComponent implements OnInit {
             this.commentsCollection = fetchedNotes;
         });
 
-        this._notesService.GetNoteById(this.noteId).subscribe((response) => {
+        this._notesService.GetNoteById(this.noteId).subscribe((response: Array<INote>) => {
             let fetchedNote = response[0];
-            console.log(response);
             this.requestedNote = fetchedNote;
         });
     }
