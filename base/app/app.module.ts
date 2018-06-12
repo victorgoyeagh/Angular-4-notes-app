@@ -45,6 +45,7 @@ import { DataProviderService } from './services/dataprovider.service';
 import { NotesService } from './services/notes.service';
 import { UserService } from './services/user.service';
 
+import { LoginAuth } from './routers/authguard.component';
 @NgModule({
     declarations: [
         HomePage,
@@ -83,7 +84,8 @@ import { UserService } from './services/user.service';
         DataProviderService,
         NotesService,
         UserService,
-        CommentsService
+        CommentsService,
+        LoginAuth
     ],
     bootstrap:  [
         BaseComponent

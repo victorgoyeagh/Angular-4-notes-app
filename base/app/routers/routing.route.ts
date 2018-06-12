@@ -5,12 +5,14 @@ import { LoginPage } from '../views/login.view';
 import { DashboardPage } from '../views/dashboard.view';
 import { CommentPage } from './../views/comments.view';
 import { PageNotFoundPage } from './../views/pagenotfound.view';
+import { LoginAuth } from './authguard.component';
 
 const appRoutes: Routes = [
     {
         path: '',
         component: DashboardPage,
-        pathMatch: 'full'
+        pathMatch: 'full',
+        canActivate: [LoginAuth]
     },
     {
         path: 'login',
@@ -20,7 +22,8 @@ const appRoutes: Routes = [
     {
         path: 'dashboard',
         component: DashboardPage,
-        pathMatch: 'full'
+        pathMatch: 'full',
+        canActivate: [LoginAuth]
     },
     {
         path: 'home',

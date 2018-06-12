@@ -13,7 +13,6 @@ export class CommentPage implements OnInit {
     constructor(
         private _loginService: LoginService
     ) {
-        this._loginService.CheckLogin();
     }
 
     ngOnInit() {

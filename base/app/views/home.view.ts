@@ -11,7 +11,6 @@ export class HomePage {
         private _loginService: LoginService
     ) {
 
-        this._loginService.CheckLogin();
     }
 
 }

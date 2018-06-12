@@ -11,7 +11,6 @@ export class DashboardPage implements OnInit {
     constructor(
         private _loginService: LoginService
     ) { 
-        this._loginService.CheckLogin();
     }
 
     ngOnInit() {

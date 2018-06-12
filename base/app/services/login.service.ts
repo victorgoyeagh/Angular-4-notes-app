@@ -12,8 +12,7 @@ import { createStore } from 'redux';
 import { RootReducer } from '../state/state.store';
 import { NgRedux } from 'ng2-redux';
 import { environment } from "../../environments/environment";
-import { Subject } from 'rxjs/Subject';
-
+import * as Rx from 'rxjs';
 
 @Injectable()
 export class LoginService {
@@ -23,7 +22,7 @@ export class LoginService {
 
     private userId: number = undefined;
     private currentUser: IUser;
-    public userIsLoggedIn: Subject<any> = new Subject<any>()
+    public userIsLoggedIn: Rx.BehaviorSubject<boolean> = new Rx.BehaviorSubject<boolean>(false);
 
     constructor(
         private _router: Router,
@@ -102,14 +101,11 @@ export class LoginService {
         this._router.navigateByUrl('/login');
     }
 
-    public CheckLogin() {
-        if (!this.UserIsLoggedIn()) {
-            this._router.navigateByUrl('/login');
-        }
-    }
-
-    public UserIsLoggedIn() {
+    /*
+    public UserIsLoggedIn(): Rx.Observable<boolean> {
         this.currentUser = <IUser>this._stateProviderService.ManageUserInState(StateProviderActions.Retrieve);
-        return (this.currentUser != undefined);
+        console.log(this.currentUser != undefined);
+        return Rx.Observable.of(this.currentUser != undefined);
     }
+    */
 }

@@ -2,14 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { FormValidator } from './../../helpers/FormValidatorUtil';
 import { LoginService } from './../../services/login.service';
+import * as Rx from 'rxjs';
 
 @Component({
     selector: 'c-login',
     templateUrl: './templates/login.template.html'
 })
 
-export class LoginComponent {
+export class LoginComponent implements OnInit {
     private pwMinLength: number = 5;
+    private getLoggedInStatus: Rx.BehaviorSubject<boolean> = new Rx.BehaviorSubject<boolean>(false);
+    public userIsLoggedIn:boolean= false;
 
     private logInForm = new FormGroup({
         email: new FormControl('test.ing@test.com', [
@@ -25,10 +28,13 @@ export class LoginComponent {
     constructor(
         private _loginService: LoginService
     ){
+
     }
 
-    UserIsLoggedIn(){
-        return this._loginService.UserIsLoggedIn();
+    ngOnInit(){
+        this._loginService.userIsLoggedIn.subscribe((isLoggedIn) => {
+            this.userIsLoggedIn = isLoggedIn;
+        })
     }
 
     SubmitLoginDetails(){

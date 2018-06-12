@@ -11,6 +11,5 @@ export class PageNotFoundPage {
     constructor(
         private _loginService: LoginService
     ){
-        this._loginService.CheckLogin();
     }
 }

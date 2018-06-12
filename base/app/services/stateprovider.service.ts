@@ -15,7 +15,7 @@ export class StateProviderService {
     constructor(
         private _store: NgRedux<any>
     ) {
-        this.stateProvider = StateProviders.ReduxStore;
+        this.stateProvider = StateProviders.LocalStorage;
     }
 
     ManageUserInState(action?: StateProviderActions, user?: IUser) {
