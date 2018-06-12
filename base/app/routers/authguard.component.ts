@@ -1,8 +1,8 @@
-import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { Injectable, Inject } from '@angular/core';
-import { LoginService } from './../services/login.service';
+import { Injectable } from '@angular/core';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import * as Rx from 'rxjs';
-import { take, map, tap } from 'rxjs/operators';
+import { LoginService } from './../services/login.service';
+import { map, take, tap } from 'rxjs/operators';
 
 
 @Injectable()
@@ -11,28 +11,21 @@ export class LoginAuth implements CanActivate {
     constructor(
         private _loginService: LoginService,
         private _router: Router
-    ) {
-
+    ){
     }
 
-    canActivate(
-        route: ActivatedRouteSnapshot,
-        state: RouterStateSnapshot): Rx.Observable<boolean> {
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Rx.Observable<boolean> {
 
         return this._loginService.userIsLoggedIn
-            .pipe(
-                map(value => {
-                    return value
-                }),
-                take(1),
-                tap(allowed => {
+                .pipe(
+                    map((value) => value),
+                    take(1),
+                    tap((loggenIn: boolean) => {
 
-                    if (!allowed) {
-                        this._router.navigate(['login'])
-                    }
-                }
-            ));
-            
+                        if(!loggenIn){
+                            this._router.navigate(['login']);
+                        }
+                    })
+                )
     }
-
 }

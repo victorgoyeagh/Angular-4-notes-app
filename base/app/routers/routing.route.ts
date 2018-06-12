@@ -9,14 +9,13 @@ import { LoginAuth } from './authguard.component';
 
 const appRoutes: Routes = [
     {
-        path: '',
-        component: DashboardPage,
-        pathMatch: 'full',
-        canActivate: [LoginAuth]
-    },
-    {
         path: 'login',
         component: LoginPage,
+        pathMatch: 'full'
+    },
+    {
+        path: '',
+        component: HomePage,
         pathMatch: 'full'
     },
     {
@@ -26,14 +25,10 @@ const appRoutes: Routes = [
         canActivate: [LoginAuth]
     },
     {
-        path: 'home',
-        component: HomePage,
-        pathMatch: 'full'
-    },
-    {
         path: 'comments',
         component: CommentPage,
-        pathMatch: 'full'
+        pathMatch: 'full',
+        canActivate: [LoginAuth]
     },
     {
         path: '**',
