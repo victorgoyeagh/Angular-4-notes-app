@@ -101,11 +101,4 @@ export class LoginService {
         this._router.navigateByUrl('/login');
     }
 
-    /*
-    public UserIsLoggedIn(): Rx.Observable<boolean> {
-        this.currentUser = <IUser>this._stateProviderService.ManageUserInState(StateProviderActions.Retrieve);
-        console.log(this.currentUser != undefined);
-        return Rx.Observable.of(this.currentUser != undefined);
-    }
-    */
 }

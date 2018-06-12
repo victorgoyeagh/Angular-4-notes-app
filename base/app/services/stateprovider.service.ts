@@ -15,7 +15,7 @@ export class StateProviderService {
     constructor(
         private _store: NgRedux<any>
     ) {
-        this.stateProvider = StateProviders.LocalStorage;
+        this.stateProvider = StateProviders.Cookies;
     }
 
     ManageUserInState(action?: StateProviderActions, user?: IUser) {
